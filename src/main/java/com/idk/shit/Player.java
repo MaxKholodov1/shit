@@ -4,8 +4,8 @@ public class Player extends Object {
     protected float speed_y=-0.0f;
     protected float max_speed_y=0.06f;
     protected float accel_y=-0.003f;
-    Player(float startX, float startY, float width, float height, float speed) {
-        super(startX, startY, width, height, speed);
+    Player(float startX, float startY, float width, float height, float speed, float[] colour) {
+        super(startX, startY, width, height, speed, colour);
     }
 
     @Override

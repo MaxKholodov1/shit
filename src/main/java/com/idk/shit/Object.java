@@ -1,5 +1,6 @@
 package com.idk.shit;
 
+
 import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glEnd;
@@ -9,12 +10,15 @@ public class Object  {
     protected float x,y;
     protected  float width, height; // Размеры игрока
     protected float speed;   // Скорость перемещения игрока
-    Object(float startX, float startY, float width, float height, float speed) {
+    protected float[] colour;
+    Object(float startX, float startY, float width, float height, float speed, float[] colour) {
         this.x = startX;
         this.y = startY;
         this.width = width;
         this.height = height;
         this.speed = speed;
+        this.colour = colour;
+
     }
     public float getLeft() {
         return x - width / 2;
@@ -91,7 +95,7 @@ public class Object  {
     
     
     public void draw(){
-        GL11.glColor3f(0, 0, 0);
+        GL11.glColor3f(this.colour[0], this.colour[1], this.colour[2]);
         glBegin(GL11.GL_QUADS);
             glVertex2f(x-width/2, y-height/2); 
             glVertex2f(x+width/2, y-height/2); 
