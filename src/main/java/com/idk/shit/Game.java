@@ -88,7 +88,7 @@ public class Game extends GameState {
     @Override
     public void update() {
         if (player.fall_down()==true){
-            stateManager.setState(new GameOver(window, stateManager));
+            stateManager.setState(new GameOver(window, stateManager, score));
         }
         if (go_left) {
             player.update_object(-speed_player_x);
