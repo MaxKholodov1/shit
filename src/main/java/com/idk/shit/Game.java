@@ -23,7 +23,7 @@ public class Game extends GameState {
 
     private Player player = new Player(0.0f, 0.0f, 0.2f, 0.13f, 0.02f,Colours.BLACK );
     private Object block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE);
-    private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "играть заново", Colours.RED, vg);
+    private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "Menu", Colours.GREEN, vg);
 
     private boolean go_left = false;
     private boolean go_right = false;
@@ -153,7 +153,7 @@ public class Game extends GameState {
 
         redButton.update(window);
         if (redButton.isClicked()) {
-            stateManager.setState(new GameOver(window, stateManager));
+            stateManager.setState(new Menu(window, stateManager));
         }
     }
     @Override
