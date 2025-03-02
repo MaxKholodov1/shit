@@ -4,14 +4,6 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
 import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
-import org.lwjgl.nanovg.NVGColor;
-import org.lwjgl.nanovg.NanoVG;
-import static org.lwjgl.nanovg.NanoVG.nvgBeginFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgEndFrame;
-import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
-import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
-import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
-import static org.lwjgl.nanovg.NanoVG.nvgText;
 import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
@@ -77,40 +69,15 @@ public class button {
             glVertex2f(x + width / 2, y + height / 2); 
             glVertex2f(x - width / 2, y + height / 2); 
         glEnd();
-        float textX = (x + 1) * screen_width / 2;
-        float textY = (1 - y) * screen_height / 2;
-        drawText(label, textX, textY);
+        TextRenderer textRenderer = new TextRenderer(x, y, label, Colours.BROWN, vg, height, width);
+        textRenderer.drawText( );
 
     }
-    private void drawText(String text, float x, float y) {
-        nvgBeginFrame(vg, screen_width, screen_height, 1); // Начинаем фрейм
-        nvgFontSize(vg, 24.0f); // Устанавливаем размер шрифта
-        String fontPath = "C:/Users/maksh/Desktop/python/shit/src/main/java/com/idk/shit/Roboto_Condensed-MediumItalic.ttf";
-        int font = NanoVG.nvgCreateFont(vg, "roboto", fontPath);
-        if (font == -1) {
-            throw new RuntimeException("Не удалось загрузить шрифт: " + fontPath);
-        }
-        nvgFontFace(vg, "roboto");    
-        // Создаем цвет
-        NVGColor color1 = NVGColor.create();
-        color1.r(0.0f);  // Красный
-        color1.g(0.0f);  // Зеленый
-        color1.b(0.0f);  // Синий
-        color1.a(1.0f);  // Альфа (непрозрачность)
-        nvgFillColor(vg, color1);
     
-        // Рисуем текст
-        nvgText(vg, x, y, text);
-    
-        // Завершаем фрейм
-        nvgEndFrame(vg);
-    
-        // System.out.println("Текст нарисован: " + text);
-    }
-    private int nvgCreateFont(long vg2, String string, String fontPath) {
-    // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'nvgCreateFont'");
-        }
+    // private int nvgCreateFont(long vg2, String string, String fontPath) {
+    // // TODO Auto-generated method stub
+    //         throw new UnsupportedOperationException("Unimplemented method 'nvgCreateFont'");
+    //     }
         
             public void update(long window) {
         double[] mouseX = new double[1];

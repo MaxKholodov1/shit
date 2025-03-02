@@ -11,7 +11,7 @@ public class GameOver extends GameState{
     private long window;
     private StateManager stateManager;
     long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
-    private button redButton = new button(-0.f, 0.f, 0.6f, 0.1f, "restart", new float[]{1.0f, 0.0f, 0.0f}, vg);
+    private button redButton = new button(0.f, 0.f, 1.5f, 1f, "начать заново", new float[]{1.0f, 0.0f, 0.0f}, vg);
 
 
     public GameOver(long window, StateManager stateManager) {

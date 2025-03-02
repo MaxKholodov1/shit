@@ -86,7 +86,6 @@ public class Main {
 
         // Основной цикл рендеринга
         long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
-        TextRenderer textRenderer = new TextRenderer(100f, 100f, "балван", Colours.GREEN, vg);
         while (!glfwWindowShouldClose(window)) {
             // Очищаем буфер цвета и глубины
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -94,7 +93,6 @@ public class Main {
             // Обновляем и рендерим игру
             stateManager.update();
             stateManager.render();
-            textRenderer.drawText("балван", 100f, 100f);
 
             // Меняем буферы экрана (двойная буферизация)
             glfwSwapBuffers(window);

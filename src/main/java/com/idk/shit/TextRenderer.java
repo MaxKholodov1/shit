@@ -8,6 +8,8 @@ import static org.lwjgl.nanovg.NanoVG.nvgFillColor;
 import static org.lwjgl.nanovg.NanoVG.nvgFontFace;
 import static org.lwjgl.nanovg.NanoVG.nvgFontSize;
 import static org.lwjgl.nanovg.NanoVG.nvgText;
+import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
+
 public class TextRenderer {
     protected float screen_height=800;
     protected float screen_width=500;
@@ -16,19 +18,45 @@ public class TextRenderer {
     private String label;
     private float[] color; 
     private long vg; 
+    private float max_height;
+    private float max_width;
 
-
-    public TextRenderer(float x, float y, String label,float[] color,  long vg ) {
-        this.x = x;
-        this.y = y;
+    public TextRenderer(float x, float y, String label,float[] color,  long vg, float max_height,float  max_width ) {
+        this.x = (x+1)/2*screen_width;
+        this.y =(1-(y+1)/2) *screen_height;
         this.label = label;
         this.color = color;
         this.vg=vg;
+        this.max_height=max_height/2*screen_height;
+        this.max_width=max_width/2*screen_width;
     }
+    private float  calc( float max_width,float  max_height){
+        float fontSize = 60.0f; 
+        float[] bounds = new float[4];
 
-    public void drawText(String label, float x, float y) {
+        while (true) {
+            nvgFontSize(vg, fontSize);
+            nvgTextBounds(vg, 0, 0, label, bounds);
+
+            float textWidth = bounds[2] - bounds[0]; // Ширина текста
+            float textHeight = bounds[3] - bounds[1]; // Высота текста
+
+            if (textWidth <= max_width && textHeight <= max_height) {
+                break; // Текст помещается в заданные размеры
+            }
+
+            fontSize -= 1.0f; // Уменьшаем размер шрифта
+
+            if (fontSize <= 0) {
+                throw new RuntimeException("Не удалось подобрать размер шрифта для текста: " + label);
+            }
+        }
+        return fontSize;
+    }
+    public void drawText() {
         nvgBeginFrame(vg, screen_width, screen_height, 1); // Начинаем фрейм
-        nvgFontSize(vg, 24.0f); 
+        float fontSize = calc( max_width, max_height);
+        nvgFontSize(vg, fontSize);
         String fontPath = "C:/Users/maksh/Desktop/python/shit/src/main/java/com/idk/shit/Roboto_Condensed-MediumItalic.ttf";
         int font = NanoVG.nvgCreateFont(vg, "roboto", fontPath);
         if (font == -1) {
@@ -42,8 +70,14 @@ public class TextRenderer {
         color1.b(0.0f);  // Синий
         color1.a(1.0f);  // Альфа (непрозрачность)
         nvgFillColor(vg, color1);
-    
-        nvgText(vg, x, y, label);
+
+        float[] bounds = new float[4];
+        nvgTextBounds(vg, 0, 0, label, bounds);
+        float textWidth = bounds[2] - bounds[0]; // Ширина текста
+        float textHeight = bounds[3] - bounds[1]; // Высота текста
+
+
+        nvgText(vg, this.x-textWidth/2, this.y+textHeight/2, label);
     
         nvgEndFrame(vg);
     }
