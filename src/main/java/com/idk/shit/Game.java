@@ -58,7 +58,7 @@ public class Game extends GameState {
         float prev_height;
         for (int i = 0; i < 6; ++i) {
             prev_height = supposed_blocks.getLast().getTop();
-            float a = prev_height + max_height / 3;
+            float a = prev_height + max_height / 5;
             float b = prev_height + max_height;
             float left = -1 + block_width / 2;
             float right = 1 - block_width / 2;
@@ -84,6 +84,9 @@ public class Game extends GameState {
     }
     @Override
     public void update() {
+        if (player.fall_down()==true){
+            stateManager.setState(new GameOver(window, stateManager));
+        }
         if (go_left) {
             player.update_object(-speed_player_x);
         } else if (go_right) {
@@ -156,9 +159,9 @@ public class Game extends GameState {
     @Override
     public void render() {
         player.draw();
-        redButton.draw();
         for (Object block : blocks) {
             block.draw();
         }
+        redButton.draw();
     }
 }

@@ -7,7 +7,13 @@ public class Player extends Object {
     Player(float startX, float startY, float width, float height, float speed, float[] colour) {
         super(startX, startY, width, height, speed, colour);
     }
-
+    public boolean fall_down(){
+        if(this.y<-1){
+            return true;
+        }else{
+            return false;
+        }
+    }
     @Override
     public void update_object(float speed) {
         speed_y+=accel_y;
@@ -16,9 +22,9 @@ public class Player extends Object {
             this.x=2+this.x;
         }
         this.x+=speed;
-        if (this.y<-1){
-            this.y=0.5f;
-        }
+        // if (this.y<-1){
+        //     this.y=0.5f;
+        // }
         if (this.x>1){
             this.x=-2+this.x;
         }
