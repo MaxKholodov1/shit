@@ -19,12 +19,15 @@ import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.nanovg.NanoVG;
+import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
+
 
 public class Main {
     private long window;
@@ -82,6 +85,8 @@ public class Main {
         glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
         // Основной цикл рендеринга
+        long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
+        TextRenderer textRenderer = new TextRenderer(100f, 100f, "балван", Colours.GREEN, vg);
         while (!glfwWindowShouldClose(window)) {
             // Очищаем буфер цвета и глубины
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -89,6 +94,7 @@ public class Main {
             // Обновляем и рендерим игру
             stateManager.update();
             stateManager.render();
+            textRenderer.drawText("балван", 100f, 100f);
 
             // Меняем буферы экрана (двойная буферизация)
             glfwSwapBuffers(window);
