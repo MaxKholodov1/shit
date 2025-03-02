@@ -40,7 +40,7 @@ public class TextRenderer {
 
         while (true) {
             nvgFontSize(vg, fontSize);
-            nvgTextBounds(vg, 0, 0, label, bounds);
+            nvgTextBounds(vg, 0, 0, this.label, bounds);
 
             float textWidth = bounds[2] - bounds[0]; // Ширина текста
             float textHeight = bounds[3] - bounds[1]; // Высота текста
@@ -56,6 +56,10 @@ public class TextRenderer {
             }
         }
         return fontSize;
+    }
+    public void update_text(String new_text){
+        this.label=new_text;
+        calc(this.max_width, this.max_height);
     }
     public void drawText() {
         nvgBeginFrame(vg, screen_width, screen_height, 1); // Начинаем фрейм

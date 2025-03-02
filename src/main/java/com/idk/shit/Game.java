@@ -24,6 +24,8 @@ public class Game extends GameState {
     private Player player = new Player(0.0f, 0.0f, 0.2f, 0.13f, 0.02f,Colours.BLACK );
     private Object block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE);
     private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "Menu", Colours.GREEN, vg);
+    
+    private  TextRenderer text_score = new TextRenderer(0.8f, 0.8f, "", Colours.BLACK, vg, 0.2f,0.4f );
 
     private boolean go_left = false;
     private boolean go_right = false;
@@ -48,7 +50,8 @@ public class Game extends GameState {
         this.window = window; // Сохраняем окно
         this.stateManager = stateManager;
         initGame();
-    
+        String label = String.valueOf(score);
+        this.text_score = new TextRenderer(0.8f, 0.8f, label, Colours.BLACK, vg, 0.2f, 0.4f);
     }
 
     private void initGame() {
@@ -155,6 +158,8 @@ public class Game extends GameState {
         if (redButton.isClicked()) {
             stateManager.setState(new Menu(window, stateManager));
         }
+        String label = String.valueOf(score);
+        this.text_score.update_text(label);
     }
     @Override
     public void render() {
@@ -162,6 +167,7 @@ public class Game extends GameState {
         for (Object block : blocks) {
             block.draw();
         }
+        text_score.drawText();
         redButton.draw();
     }
 }
