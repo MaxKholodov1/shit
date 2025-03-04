@@ -19,14 +19,15 @@ import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.glfw.GLFW.glfwWindowHint;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.nanovg.NanoVG;
-import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
+
+import com.idk.shit.game.Game;
+import com.idk.shit.game.StateManager;
 
 
 public class Main {
@@ -47,6 +48,7 @@ public class Main {
     }
 
     private void init() {
+
         // Устанавливаем обработчик ошибок GLFW, ошибки будут выводиться в System.err
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -85,7 +87,6 @@ public class Main {
         glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 
         // Основной цикл рендеринга
-        long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
         while (!glfwWindowShouldClose(window)) {
             // Очищаем буфер цвета и глубины
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
