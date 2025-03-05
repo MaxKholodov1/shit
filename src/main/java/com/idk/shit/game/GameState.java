@@ -1,5 +1,7 @@
 package com.idk.shit.game;
 
+import com.idk.shit.utils.InputManager;
+
 public abstract  class GameState {
     public enum State{
         _menu_,
@@ -7,16 +9,20 @@ public abstract  class GameState {
         _overgame_
     }
     protected long window;
-    protected StateManager stateManager;
-    public GameState(long window, StateManager stateManager ){
+    protected State curState;
+    protected InputManager inputManager;
+    public GameState(long window, State state, InputManager input){
         this.window=window;
-        this.stateManager=stateManager;
+        this.curState = state;
+        this.inputManager = input;
     }
-    public abstract void update();
+    public State update(){
+        return this.curState;
+    }
     public abstract void render();
-    // public abstract void cleanup();
-
     public void cleanup() {
 
     }
+
+    
 }

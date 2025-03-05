@@ -10,54 +10,36 @@ import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 
 public class GameOver extends GameState{
-    private long window;
-    private StateManager stateManager;
-    private InputManager inputManager;
-
     long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
     private int score;
     private button redButton = new button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN, vg);
     private TextRenderer scoreText; 
 
-    public GameOver(long window, StateManager stateManager, int score, InputManager inputManager) {
-        super(window, stateManager);
-        this.window = window; // Сохраняем окно
-        this.stateManager = stateManager;
-        this.score=score;
-        this.inputManager = inputManager; // Инициализируем InputManager
+    public GameOver(long window, InputManager inputManager) {
+        super(window, State._overgame_, inputManager);
+        this.window = window; 
+        this.inputManager = inputManager;
         initGameOver();
     }
-    public boolean spaced=false;
+    protected boolean spaced=false;
     private void initGameOver(){
-        inputManager.registerCallbacks(window); // Регистрируем обработчики ввода
-        
         String text ="Score: " + score;
         scoreText =  new TextRenderer(0f, 0.8f, text, Colours.MAGENTA, vg, 0.7f, 0.7f );
 
     }
     @Override
-    public void update(){
-
+    public State update(){
         redButton.update(window);
-        if (redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            cleanup();
+        if (redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE))  {
+            this.curState = State._game_;
             inputManager.cleanup();
-            stateManager.setState(new Game(window, stateManager, inputManager));
-            return;
+            return this.curState;
         }
+        return this.curState;
     }
     @Override
     public void render(){
         redButton.draw();
         scoreText.drawText();
     }
-    @Override
-    public void cleanup() {
-        redButton = null;
-        if (vg != 0) {
-            NanoVGGL3.nvgDelete(vg);
-            vg = 0; // Обнуляем ссылку на контекст
-        }
-    }   
-
 }

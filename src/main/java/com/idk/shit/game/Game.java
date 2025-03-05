@@ -11,6 +11,7 @@ import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL11;
 
+import com.idk.shit.game.GameState.State;
 import com.idk.shit.graphics.TextureCache;
 import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
@@ -23,7 +24,6 @@ import com.idk.shit.utils.rand;
 
 
 public class Game extends GameState {
-    private InputManager inputManager;
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
 
@@ -52,15 +52,9 @@ public class Game extends GameState {
 
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - 0.05f;
 
-    private long window;
-    private StateManager stateManager;
-
-    public Game(long window, StateManager stateManager, InputManager inputManager) {
-        super(window, stateManager); // Передаем window в родительский класс
-        this.window = window; // Сохраняем окно
-        this.stateManager = stateManager;
+    public Game(long window, InputManager inputManager) {
+        super(window, State._game_, inputManager); // Передаем window в родительский класс
         this.inputManager = inputManager;
-        this.inputManager.registerCallbacks(window);
         initGame();
         String label = String.valueOf(score);
         this.text_score = new TextRenderer(0.8f, 0.8f, label, Colours.BLACK, vg, 0.2f, 0.4f);
@@ -101,14 +95,14 @@ public class Game extends GameState {
     }
     
     @Override
-    public void update() {
+    public State update() {
         if (player.fall_down()==true){
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
             }
             cleanup();
-            stateManager.setState(new GameOver(window, stateManager, score, inputManager));
-            return;
+            this.curState = State._overgame_;
+            return this.curState;
         }
         if (inputManager.isKeyPressed(GLFW_KEY_LEFT)) {
             player.update_object(-speed_player_x);
@@ -169,14 +163,15 @@ public class Game extends GameState {
             blocks.clear();
             supposed_blocks.clear();
             TextureCache.cleanup();
-            stateManager.setState(new Menu(window, stateManager, inputManager));
             cleanup();
             inputManager.cleanup();
-            return;
+            this.curState = State._menu_;
+            return this.curState;
         }
 
         String label = String.valueOf(score);
         this.text_score.update_text(label);
+        return this.curState;
     }
     @Override
     public void render() {

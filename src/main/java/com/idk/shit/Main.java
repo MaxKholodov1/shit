@@ -26,7 +26,6 @@ import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import com.idk.shit.game.Game;
 import com.idk.shit.game.StateManager;
 import com.idk.shit.utils.InputManager;
 
@@ -34,7 +33,7 @@ import com.idk.shit.utils.InputManager;
 public class Main {
     private long window;
     private StateManager stateManager;
-    protected InputManager inputManager = new InputManager(); // Создаем InputManager
+    protected InputManager inputManager; // Создаем InputManager
 
     public void run() {
         System.out.println("Hello, LWJGL " + Version.getVersion() + "!");
@@ -65,6 +64,8 @@ public class Main {
 
         // Создание окна
         this.window = glfwCreateWindow(500, 800, "hello, world!", NULL, NULL);
+        this.inputManager = new InputManager();
+        inputManager.registerCallbacks(window);
         if (window == NULL)
             throw new RuntimeException("Ошибка создания окна GLFW");
 
@@ -77,8 +78,7 @@ public class Main {
         GL.createCapabilities();
 
         // Инициализация игры
-        stateManager = new StateManager(inputManager);
-        stateManager.setState(new Game(window, stateManager, inputManager));
+        stateManager = new StateManager(window, inputManager);
     }
 
     private void loop() {
