@@ -80,7 +80,7 @@ public class button {
     
    
         
-            public void update(long window) {
+    public void update(long window) {
         double[] mouseX = new double[1];
         double[] mouseY = new double[1];
         glfwGetCursorPos(window, mouseX, mouseY);

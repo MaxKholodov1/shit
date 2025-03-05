@@ -28,11 +28,13 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.idk.shit.game.Game;
 import com.idk.shit.game.StateManager;
+import com.idk.shit.utils.InputManager;
 
 
 public class Main {
     private long window;
     private StateManager stateManager;
+    protected InputManager inputManager = new InputManager(); // Создаем InputManager
 
     public void run() {
         System.out.println("Hello, LWJGL " + Version.getVersion() + "!");
@@ -75,8 +77,8 @@ public class Main {
         GL.createCapabilities();
 
         // Инициализация игры
-        stateManager = new StateManager();
-        stateManager.setState(new Game(window, stateManager));
+        stateManager = new StateManager(inputManager);
+        stateManager.setState(new Game(window, stateManager, inputManager));
     }
 
     private void loop() {

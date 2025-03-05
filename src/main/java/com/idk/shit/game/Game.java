@@ -1,17 +1,12 @@
 package com.idk.shit.game;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_M;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
-import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL11;
@@ -22,10 +17,13 @@ import com.idk.shit.objects.Player;
 import com.idk.shit.ui.TextRenderer;
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
+import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
 import com.idk.shit.utils.rand;
 
+
 public class Game extends GameState {
+    private InputManager inputManager;
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
 
@@ -43,9 +41,7 @@ public class Game extends GameState {
     
     private  TextRenderer text_score = new TextRenderer(0.8f, 0.8f, "", Colours.BLACK, vg, 0.2f,0.4f );
 
-    private boolean go_left = false;
-    private boolean go_right = false;
-    private boolean go_to_menu = false;
+
 
     private float speed_player_x = 0.05f;
 
@@ -59,10 +55,12 @@ public class Game extends GameState {
     private long window;
     private StateManager stateManager;
 
-    public Game(long window, StateManager stateManager) {
+    public Game(long window, StateManager stateManager, InputManager inputManager) {
         super(window, stateManager); // Передаем window в родительский класс
         this.window = window; // Сохраняем окно
         this.stateManager = stateManager;
+        this.inputManager = inputManager;
+        this.inputManager.registerCallbacks(window);
         initGame();
         String label = String.valueOf(score);
         this.text_score = new TextRenderer(0.8f, 0.8f, label, Colours.BLACK, vg, 0.2f, 0.4f);
@@ -100,26 +98,6 @@ public class Game extends GameState {
             AddBlock(left, right, b, a);
 
         }
-
-        // Устанавливаем обработчик клавиатуры
-        glfwSetKeyCallback(this.window, null); // Очистка предыдущего обработчика
-       WeakReference<Game> weakGame = new WeakReference<>(this);
-            glfwSetKeyCallback(window, (wind, key, scancode, action, mods) -> {
-                Game game = weakGame.get();
-                if (game != null) {
-                    if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                        glfwSetWindowShouldClose(game.window, true);
-                    if (key == GLFW_KEY_LEFT) {
-                        game.go_left = action != GLFW_RELEASE;
-                    }
-                    if (key == GLFW_KEY_RIGHT) {
-                        game.go_right = action != GLFW_RELEASE;
-                    }
-                    if (key == GLFW_KEY_M) {
-                        game.go_to_menu = true;
-                    }
-                }
-            });
     }
     
     @Override
@@ -129,12 +107,12 @@ public class Game extends GameState {
                 ScoreManager.savebest_attamp(score);
             }
             cleanup();
-            stateManager.setState(new GameOver(window, stateManager, score));
+            stateManager.setState(new GameOver(window, stateManager, score, inputManager));
             return;
         }
-        if (go_left) {
+        if (inputManager.isKeyPressed(GLFW_KEY_LEFT)) {
             player.update_object(-speed_player_x);
-        } else if (go_right) {
+        } else if (inputManager.isKeyPressed(GLFW_KEY_RIGHT)) {
             player.update_object(speed_player_x);
         } else {
             player.update_object(0);
@@ -184,16 +162,16 @@ public class Game extends GameState {
         }
 
         redButton.update(window);
-        if ( redButton.isClicked() || go_to_menu==true) {
-            go_to_menu=false;
+        if ( redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
             }
             blocks.clear();
             supposed_blocks.clear();
             TextureCache.cleanup();
-            stateManager.setState(new Menu(window, stateManager));
+            stateManager.setState(new Menu(window, stateManager, inputManager));
             cleanup();
+            inputManager.cleanup();
             return;
         }
 
@@ -212,7 +190,6 @@ public class Game extends GameState {
     }
     @Override
     public void cleanup() {
-        glfwSetKeyCallback(window, null); // Удаляем обработчик
         blocks.clear();
         supposed_blocks.clear();
         TextureCache.cleanup();
