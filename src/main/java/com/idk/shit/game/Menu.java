@@ -1,9 +1,9 @@
 package com.idk.shit.game;
 
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_ENTER;
+import java.lang.ref.WeakReference;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
 import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
@@ -28,11 +28,17 @@ public class Menu extends GameState {
         initMenu();
     }
     private void initMenu(){
+        WeakReference<Menu> weakMenu = new WeakReference<>(this);
+
         glfwSetKeyCallback(this.window, (wind, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(this.window, true); // Закрытие окна при нажатии ESC
-            if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
-                stateManager.setState(new Game(window, stateManager));
+            Menu menu = weakMenu.get(); // Получаем объект Game из WeakReference
+            if (menu != null) { // Проверяем, что объект еще существует
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                    glfwSetWindowShouldClose(menu.window, true); // Закрытие окна при нажатии ESC
+                }
+                // if (key == GLFW_KEY_SPACE) {
+                //     menu.spaced = true; // Обработка нажатия пробела
+                // }
             }
         });
         startButton.draw();

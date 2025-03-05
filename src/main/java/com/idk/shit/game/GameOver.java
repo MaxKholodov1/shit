@@ -1,5 +1,7 @@
 package com.idk.shit.game;
 
+import java.lang.ref.WeakReference;
+
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
@@ -8,6 +10,7 @@ import static org.lwjgl.glfw.GLFW.glfwSetWindowShouldClose;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 
+import com.idk.shit.graphics.TextureCache;
 import com.idk.shit.ui.TextRenderer;
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
@@ -27,13 +30,21 @@ public class GameOver extends GameState{
         this.score=score;
         initGameOver();
     }
-    protected boolean spaced=false;
+    public boolean spaced=false;
     private void initGameOver(){
+        glfwSetKeyCallback(this.window, null); // Удаление старого обработчика
+        WeakReference<GameOver> weakGameOver = new WeakReference<>(this);
         glfwSetKeyCallback(this.window, (wind, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(this.window, true); // Закрытие окна при нажатии ESC
-            if (key == GLFW_KEY_SPACE){
-                spaced=true;
+            GameOver gameover = weakGameOver.get(); // Получаем объектgameover из WeakReference
+            if (gameover != null) { // Проверяем, что объект еще существует
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE || key == GLFW_KEY_SPACE) {
+                    glfwSetWindowShouldClose(gameover.window, true); // Закрытие окна при нажатии ESC
+                    System.out.println("НАЖАТ ЕБАНЫЙ ПРОБЕЛ");
+                }
+                if (key == GLFW_KEY_SPACE) {
+                    gameover.spaced = true; // Обработка нажатия пробела
+                    System.out.println("НАЖАТ ЕБАНЫЙ ПРОБЕЛ");
+                }
             }
         });
         String text ="Score: " + score;
@@ -43,8 +54,15 @@ public class GameOver extends GameState{
     @Override
     public void update(){
         redButton.update(window);
-        if (redButton.isClicked() || spaced==true) {
+        if (redButton.isClicked() || spaced) {
             stateManager.setState(new Game(window, stateManager));
+            cleanup();
+            return;
+        }
+        if (spaced) {
+            stateManager.setState(new Game(window, stateManager));
+            cleanup();
+            return;
         }
     }
     @Override
@@ -52,4 +70,15 @@ public class GameOver extends GameState{
         redButton.draw();
         scoreText.drawText();
     }
+    @Override
+    public void cleanup() {
+        glfwSetKeyCallback(window, null); // Удаляем обработчик
+        TextureCache.cleanup();
+        redButton = null;
+        if (vg != 0) {
+            NanoVGGL3.nvgDelete(vg);
+            vg = 0; // Обнуляем ссылку на контекст
+        }
+    }   
+
 }

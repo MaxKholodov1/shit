@@ -1,10 +1,13 @@
 package com.idk.shit.game;
 
 public class StateManager {
-    private GameState currState;
+    public GameState currState;
     public void setState(GameState newState){
         if(currState!=null){
+            currState.cleanup(); // Освобождаем ресурсы предыдущего состояния
+            currState = null;
             currState=newState;
+            System.gc();
         }
         else{
             currState = null;

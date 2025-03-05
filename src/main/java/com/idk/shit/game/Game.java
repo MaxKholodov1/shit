@@ -1,11 +1,13 @@
 package com.idk.shit.game;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_ESCAPE;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
+import static org.lwjgl.glfw.GLFW.GLFW_KEY_M;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 import static org.lwjgl.glfw.GLFW.glfwSetKeyCallback;
@@ -43,6 +45,8 @@ public class Game extends GameState {
 
     private boolean go_left = false;
     private boolean go_right = false;
+    private boolean go_to_menu = false;
+
     private float speed_player_x = 0.05f;
 
     private float max_speed_y = 0.06f;
@@ -98,16 +102,24 @@ public class Game extends GameState {
         }
 
         // Устанавливаем обработчик клавиатуры
-        glfwSetKeyCallback(this.window, (wind, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
-                glfwSetWindowShouldClose(this.window, true); // Закрытие окна при нажатии ESC
-            if (key == GLFW_KEY_LEFT) {
-                go_left = action != GLFW_RELEASE;
-            }
-            if (key == GLFW_KEY_RIGHT) {
-                go_right = action != GLFW_RELEASE;
-            }
-        });
+        glfwSetKeyCallback(this.window, null); // Очистка предыдущего обработчика
+       WeakReference<Game> weakGame = new WeakReference<>(this);
+            glfwSetKeyCallback(window, (wind, key, scancode, action, mods) -> {
+                Game game = weakGame.get();
+                if (game != null) {
+                    if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
+                        glfwSetWindowShouldClose(game.window, true);
+                    if (key == GLFW_KEY_LEFT) {
+                        game.go_left = action != GLFW_RELEASE;
+                    }
+                    if (key == GLFW_KEY_RIGHT) {
+                        game.go_right = action != GLFW_RELEASE;
+                    }
+                    if (key == GLFW_KEY_M) {
+                        game.go_to_menu = true;
+                    }
+                }
+            });
     }
     
     @Override
@@ -115,9 +127,10 @@ public class Game extends GameState {
         if (player.fall_down()==true){
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
-                TextureCache.cleanup();
             }
+            cleanup();
             stateManager.setState(new GameOver(window, stateManager, score));
+            return;
         }
         if (go_left) {
             player.update_object(-speed_player_x);
@@ -171,7 +184,8 @@ public class Game extends GameState {
         }
 
         redButton.update(window);
-        if (redButton.isClicked()) {
+        if ( redButton.isClicked() || go_to_menu==true) {
+            go_to_menu=false;
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
             }
@@ -179,7 +193,10 @@ public class Game extends GameState {
             supposed_blocks.clear();
             TextureCache.cleanup();
             stateManager.setState(new Menu(window, stateManager));
+            cleanup();
+            return;
         }
+
         String label = String.valueOf(score);
         this.text_score.update_text(label);
     }
@@ -193,5 +210,19 @@ public class Game extends GameState {
         redButton.draw();
         player.draw();
     }
-    
+    @Override
+    public void cleanup() {
+        glfwSetKeyCallback(window, null); // Удаляем обработчик
+        blocks.clear();
+        supposed_blocks.clear();
+        TextureCache.cleanup();
+        player = null;
+        block = null;
+        redButton = null;
+        text_score = null;
+        if (vg != 0) {
+            NanoVGGL3.nvgDelete(vg);
+            vg = 0; // Обнуляем ссылку на контекст
+        }
+    }   
 }

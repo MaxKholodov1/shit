@@ -49,6 +49,6 @@ public class Player extends Object {
     }
     @Override
     public void draw() {
-            texture.draw(this.x, this.y, this.width, this.height);
+        texture.draw(this.x, this.y, this.width, this.height);
     }
 }
