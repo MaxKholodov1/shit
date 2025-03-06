@@ -8,11 +8,9 @@ public abstract  class GameState {
         _game_,
         _overgame_
     }
-    protected long window;
     protected State curState;
     protected InputManager inputManager;
-    public GameState(long window, State state, InputManager input){
-        this.window=window;
+    public GameState(State state, InputManager input){
         this.curState = state;
         this.inputManager = input;
     }

@@ -12,9 +12,8 @@ public class GameOver extends GameState{
     // private button redButton = new button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN, vg);
     // private TextRenderer scoreText; 
 
-    public GameOver(long window, InputManager inputManager) {
-        super(window, State._overgame_, inputManager);
-        this.window = window; 
+    public GameOver(InputManager inputManager) {
+        super(State._overgame_, inputManager);
         this.inputManager = inputManager;
         initGameOver();
     }

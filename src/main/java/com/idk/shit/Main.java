@@ -78,7 +78,7 @@ public class Main {
         GL.createCapabilities();
 
         // Инициализация игры
-        stateManager = new StateManager(window, inputManager);
+        stateManager = new StateManager(inputManager);
     }
 
     private void loop() {

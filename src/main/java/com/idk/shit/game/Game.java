@@ -48,8 +48,8 @@ public class Game extends GameState {
 
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - 0.05f;
 
-    public Game(long window, InputManager inputManager) {
-        super(window, State._game_, inputManager); // Передаем window в родительский класс
+    public Game(InputManager inputManager) {
+        super(State._game_, inputManager); // Передаем window в родительский класс
         this.inputManager = inputManager;
         initGame();
         String label = String.valueOf(score);

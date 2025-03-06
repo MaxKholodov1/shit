@@ -13,9 +13,8 @@ public class Menu extends GameState {
 
 
 
-    public Menu(long window, InputManager inputManager) {
-        super(window, State._overgame_, inputManager);
-        this.window = window; // Сохраняем окно
+    public Menu(InputManager inputManager) {
+        super(State._overgame_, inputManager);
         this.inputManager = inputManager;
         initMenu();
     }
