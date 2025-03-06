@@ -15,7 +15,7 @@ import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
-import com.idk.shit.utils.ScoreManager;
+// import com.idk.shit.utils.ScoreManager;
 // import com.idk.shit.utils.rand;
 
 
@@ -93,9 +93,9 @@ public class Game extends GameState {
     @Override
     public State update() {
         if (player.fall_down()==true){
-            if(score>ScoreManager.Load()){
-                ScoreManager.savebest_attamp(score);
-            }
+            // if(score>ScoreManager.Load()){
+            //     ScoreManager.savebest_attamp(score);
+            // }
             cleanup();
             this.curState = State._overgame_;
             return this.curState;
@@ -153,9 +153,9 @@ public class Game extends GameState {
 
         // redButton.update(window);
         if (  inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            if(score>ScoreManager.Load()){
-                ScoreManager.savebest_attamp(score);
-            }
+            // if(score>ScoreManager.Load()){
+            //     ScoreManager.savebest_attamp(score);
+            // }
             blocks.clear();
             supposed_blocks.clear();
             // TextureCache.cleanup();
