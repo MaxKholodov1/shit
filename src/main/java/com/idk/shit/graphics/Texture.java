@@ -93,6 +93,7 @@ public class Texture {
         glEnd();
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_ALPHA_TEST);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 
     }
 }

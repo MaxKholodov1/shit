@@ -8,6 +8,7 @@ import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
 import org.lwjgl.opengl.GL11;
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
+import static org.lwjgl.opengl.GL11.glColor3fv;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
@@ -56,12 +57,13 @@ public class button {
         return y;
     }
     public void draw() {
-        if (isHovered) {
-            glColor3f(color[0] * 0.8f, color[1] * 0.8f, color[2] * 0.8f); 
-        } else {
-            glColor3f(color[0], color[1], color[2]); 
-        }
-    
+        // if (isHovered) {
+        //     glColor3f(color[0] * 0.8f, color[1] * 0.8f, color[2] * 0.8f); 
+        // } else {
+        //     glColor3fv(color); 
+        // }
+        
+        glColor3fv(color); 
         glBegin(GL11.GL_QUADS);
             glVertex2f(x - width / 2, y - height / 2); 
             glVertex2f(x + width / 2, y - height / 2); 

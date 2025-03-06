@@ -138,7 +138,7 @@ public class Game extends GameState {
         }
 
         redButton.update(this.window);
-        if ( redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
+        if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
             }
@@ -165,6 +165,6 @@ public class Game extends GameState {
         supposed_blocks.clear();
         player = null;
         block = null;
-        redButton = null;
+        // redButton = null;
     }   
 }

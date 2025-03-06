@@ -21,6 +21,7 @@ public class StateManager {
     }
     public void setState(GameState.State newState){
         if (this.state != newState) {
+            System.out.println(GameState.State._game_);
             if (newState == GameState.State._game_) {
                 this.screen = new Game(window, inputManager, this.blockTexture, this.playerTexture);
             } else if (newState == GameState.State._menu_) {
