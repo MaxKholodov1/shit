@@ -2,23 +2,18 @@ package com.idk.shit.game;
 
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
-import org.lwjgl.nanovg.NanoVG;
-import org.lwjgl.nanovg.NanoVGGL3;
 
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 
 public class Menu extends GameState {
-    long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
-    private button startButton = new button(0.f, 0.f, 1.5f, 1f, "start",Colours.GREEN, vg);
+    private button startButton = new button(0.f, 0.f, 1.5f, 1f, "start",Colours.GREEN);
 
 
 
     public Menu(long window, InputManager inputManager) {
         super(window, State._overgame_, inputManager);
-        this.window = window; // Сохраняем окно
-        this.inputManager = inputManager;
         initMenu();
     }
     private void initMenu(){

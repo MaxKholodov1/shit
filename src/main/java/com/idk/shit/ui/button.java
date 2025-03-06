@@ -10,8 +10,6 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import com.idk.shit.utils.Colours;
-
 
 
 public class button {
@@ -19,24 +17,18 @@ public class button {
     protected float screen_width=500;
 
     private float x, y, width, height;
-    private String label;
     private boolean isHovered = false;
     private boolean isClicked = false;
     private float[] color; 
-    private long vg; 
-
-    TextRenderer textRenderer;
 
 
-    public button(float x, float y, float width, float height, String label,float[] color,  long vg ) {
+
+    public button(float x, float y, float width, float height, String label,float[] color) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.label = label;
         this.color = color;
-        this.vg=vg;
-        this.textRenderer = new TextRenderer(x, y, label, Colours.BROWN, vg, height, width); // Создаем один раз
 
     }
 
@@ -75,7 +67,6 @@ public class button {
             glVertex2f(x + width / 2, y + height / 2); 
             glVertex2f(x - width / 2, y + height / 2); 
         glEnd();
-        this.textRenderer.drawText( );
     }
     
    

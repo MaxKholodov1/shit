@@ -12,9 +12,9 @@ public abstract  class GameState {
     protected State curState;
     protected InputManager inputManager;
     public GameState(long window, State state, InputManager input){
-        this.window=window;
         this.curState = state;
         this.inputManager = input;
+        this.window=window;
     }
     public State update(){
         return this.curState;
