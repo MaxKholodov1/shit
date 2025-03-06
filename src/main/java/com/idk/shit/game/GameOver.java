@@ -4,14 +4,12 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 
-import com.idk.shit.ui.button;
-import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 
 public class GameOver extends GameState{
     long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
     private int score;
-    private button redButton = new button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN, vg);
+    // private button redButton = new button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN, vg);
     // private TextRenderer scoreText; 
 
     public GameOver(long window, InputManager inputManager) {
@@ -28,8 +26,8 @@ public class GameOver extends GameState{
     }
     @Override
     public State update(){
-        redButton.update(window);
-        if (redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE))  {
+        // redButton.update(window);
+        if ( inputManager.isKeyPressed(GLFW_KEY_SPACE))  {
             this.curState = State._game_;
             inputManager.cleanup();
             return this.curState;
@@ -38,7 +36,7 @@ public class GameOver extends GameState{
     }
     @Override
     public void render(){
-        redButton.draw();
+        // redButton.draw();
         // scoreText.drawText();
     }
 }

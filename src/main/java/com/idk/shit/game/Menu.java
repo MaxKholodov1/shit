@@ -5,13 +5,11 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import org.lwjgl.nanovg.NanoVG;
 import org.lwjgl.nanovg.NanoVGGL3;
 
-import com.idk.shit.ui.button;
-import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 
 public class Menu extends GameState {
     long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
-    private button startButton = new button(0.f, 0.f, 1.5f, 1f, "start",Colours.GREEN, vg);
+    // private button startButton = new button(0.f, 0.f, 1.5f, 1f, "start",Colours.GREEN, vg);
 
 
 
@@ -22,12 +20,12 @@ public class Menu extends GameState {
         initMenu();
     }
     private void initMenu(){
-        startButton.draw();
+        // startButton.draw();
     }
     @Override
     public State update(){
-        startButton.update(window);
-        if (startButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
+        // startButton.update(window);
+        if ( inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
             this.curState = State._game_;
             inputManager.cleanup();
             return this.curState;
@@ -36,7 +34,7 @@ public class Menu extends GameState {
     }
     @Override
     public void render(){
-        startButton.draw();
+        // startButton.draw();
     }
 }
 

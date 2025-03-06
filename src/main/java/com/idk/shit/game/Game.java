@@ -13,7 +13,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
-import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
@@ -34,7 +33,7 @@ public class Game extends GameState {
 
     private Player player = new Player(0.0f, 0.0f, 0.2f, 0.13f, 0.02f,Colours.WHITE );
     private Object block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE);
-    private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN, vg);
+    // private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN, vg);
     
     // private  TextRenderer text_score = new TextRenderer(0.8f, 0.8f, "", Colours.BLACK, vg, 0.2f,0.4f );
 
@@ -152,8 +151,8 @@ public class Game extends GameState {
             block.collision(player);
         }
 
-        redButton.update(window);
-        if ( redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
+        // redButton.update(window);
+        if (  inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
             }
@@ -177,7 +176,7 @@ public class Game extends GameState {
             block.draw();
         }
         // text_score.drawText();
-        redButton.draw();
+        // redButton.draw();
         player.draw();
     }
     @Override
@@ -187,7 +186,7 @@ public class Game extends GameState {
         // TextureCache.cleanup();
         player = null;
         block = null;
-        redButton = null;
+        // redButton = null;
         // text_score = null;
         if (vg != 0) {
             NanoVGGL3.nvgDelete(vg);
