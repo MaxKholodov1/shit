@@ -13,7 +13,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
-import com.idk.shit.ui.TextRenderer;
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
@@ -37,7 +36,7 @@ public class Game extends GameState {
     private Object block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE);
     private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN, vg);
     
-    private  TextRenderer text_score = new TextRenderer(0.8f, 0.8f, "", Colours.BLACK, vg, 0.2f,0.4f );
+    // private  TextRenderer text_score = new TextRenderer(0.8f, 0.8f, "", Colours.BLACK, vg, 0.2f,0.4f );
 
 
 
@@ -55,7 +54,7 @@ public class Game extends GameState {
         this.inputManager = inputManager;
         initGame();
         String label = String.valueOf(score);
-        this.text_score = new TextRenderer(0.8f, 0.8f, label, Colours.BLACK, vg, 0.2f, 0.4f);
+        // this.text_score = new TextRenderer(0.8f, 0.8f, label, Colours.BLACK, vg, 0.2f, 0.4f);
         // for (String texturePath : textures) {
         //     TextureCache.getTexture(texturePath); // здесь структуры загружаются через TExtureCache в Map
         // }
@@ -168,7 +167,7 @@ public class Game extends GameState {
         }
 
         String label = String.valueOf(score);
-        this.text_score.update_text(label);
+        // this.text_score.update_text(label);
         return this.curState;
     }
     @Override
@@ -177,7 +176,7 @@ public class Game extends GameState {
         for (Object block : blocks) {
             block.draw();
         }
-        text_score.drawText();
+        // text_score.drawText();
         redButton.draw();
         player.draw();
     }
@@ -189,7 +188,7 @@ public class Game extends GameState {
         player = null;
         block = null;
         redButton = null;
-        text_score = null;
+        // text_score = null;
         if (vg != 0) {
             NanoVGGL3.nvgDelete(vg);
             vg = 0; // Обнуляем ссылку на контекст
