@@ -77,8 +77,11 @@ public class Main {
         glfwShowWindow(window);
         GL.createCapabilities();
 
+<<<<<<< Updated upstream
         // Инициализация игры
         stateManager = new StateManager(inputManager);
+=======
+>>>>>>> Stashed changes
     }
 
     private void loop() {
