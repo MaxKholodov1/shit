@@ -27,7 +27,10 @@ import static org.lwjgl.opengl.GL11.glClearColor;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.idk.shit.game.StateManager;
+import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
+import com.idk.shit.graphics.Texture;
+import com.idk.shit.graphics.TextureCache;
 
 
 public class Main {
@@ -49,7 +52,6 @@ public class Main {
     }
 
     private void init() {
-
         // Устанавливаем обработчик ошибок GLFW, ошибки будут выводиться в System.err
         GLFWErrorCallback.createPrint(System.err).set();
 
@@ -76,12 +78,16 @@ public class Main {
         // Отображаем окно
         glfwShowWindow(window);
         GL.createCapabilities();
+        Texture playerTexture = TextureCache.getTexture("C:\\Users\\maksh\\Desktop\\python\\shit\\src\\main\\resources\\textures\\pngegg.png");
+        Texture blockTexture = TextureCache.getTexture("C:\\Users\\maksh\\Desktop\\python\\shit\\src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
+        stateManager = new StateManager(window, inputManager, blockTexture, playerTexture);
 
         // Инициализация игры
-        stateManager = new StateManager(inputManager);
+        stateManager = new StateManager(window, inputManager);
     }
 
     private void loop() {
+        
         // Загружаем функции OpenGL
         GL.createCapabilities();
 
@@ -96,7 +102,6 @@ public class Main {
             // Обновляем и рендерим игру
             stateManager.update();
             stateManager.render();
-
             // Меняем буферы экрана (двойная буферизация)
             glfwSwapBuffers(window);
 
@@ -106,6 +111,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+         
         new Main().run();
     }
 }
