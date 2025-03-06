@@ -1,24 +1,29 @@
 package com.idk.shit.objects;
 
-import com.idk.shit.graphics.Texture;
-import com.idk.shit.graphics.TextureCache;
+import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex2f;
+
+// import com.idk.shit.graphics.Texture;
+// import com.idk.shit.graphics.TextureCache;
 
 public class Object  {
     protected float x,y;
     protected  float width, height; // Размеры игрока
     protected float speed;   // Скорость перемещения игрока
     protected float[] colour;
-    private int textureId; // Идентификатор текстуры
-    private Texture texture;
-    public Object(float startX, float startY, float width, float height, float speed, float[] colour, String texturePath) {
+    // private int textureId; // Идентификатор текстуры
+    // private Texture texture;
+    public Object(float startX, float startY, float width, float height, float speed, float[] colour) {
         this.x = startX;
         this.y = startY;
         this.width = width;
         this.height = height;
         this.speed = speed;
         this.colour = colour;
-        this.texture = TextureCache.getTexture(texturePath); // Используем кэш текстур и используем из Map 
-        this.textureId = texture.getTextureID();
+        // this.texture = TextureCache.getTexture(texturePath); // Используем кэш текстур и используем из Map 
+        // this.textureId = texture.getTextureID();
 
     }
     public float getLeft() {
@@ -99,6 +104,17 @@ public class Object  {
     
     
     public void draw(){
-        texture.draw(this.x, this.y,this.width, this.height ); // рисуем текстуру используя draw от класса текстур
+        // texture.draw(this.x, this.y,this.width, this.height ); // рисуем текстуру используя draw от класса текстур
+        GL11.glColor4f(0, 0, 0, 1);
+
+        // Начинаем рисовать квадрат с текстурой
+        glBegin(GL11.GL_QUADS);
+        {
+            GL11.glTexCoord2f(0, 0); glVertex2f(x - width / 2, y - height / 2);
+            GL11.glTexCoord2f(1, 0); glVertex2f(x + width / 2, y - height / 2);
+            GL11.glTexCoord2f(1, 1); glVertex2f(x + width / 2, y + height / 2);
+            GL11.glTexCoord2f(0, 1); glVertex2f(x - width / 2, y + height / 2);
+        }
+        glEnd();
     }
 }

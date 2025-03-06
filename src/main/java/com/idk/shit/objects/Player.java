@@ -1,17 +1,22 @@
 package com.idk.shit.objects;
 
-import com.idk.shit.graphics.Texture;
+import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glVertex2f;
+
+// import com.idk.shit.graphics.Texture;
 
 public class Player extends Object { 
     protected float speed_y=-0.0f;
     protected float max_speed_y=0.06f;
     protected float accel_y=-0.003f;
-    private int textureId; // Идентификатор текстуры
-    private Texture texture;
-    public Player(float startX, float startY, float width, float height, float speed, float[] colour, String texturePath) {
-        super(startX, startY, width, height, speed, colour, texturePath);
-        this.texture = new Texture(texturePath); // Создаем объект текстуры
-        this.textureId = texture.getTextureID();
+    // private int textureId; // Идентификатор текстуры
+    // private Texture texture;
+    public Player(float startX, float startY, float width, float height, float speed, float[] colour) {
+        super(startX, startY, width, height, speed, colour);
+        // this.texture = new Texture(texturePath); // Создаем объект текстуры
+        // this.textureId = texture.getTextureID();
     }
     public boolean fall_down(){
         if(this.y<-1){
@@ -49,6 +54,17 @@ public class Player extends Object {
     }
     @Override
     public void draw() {
-        texture.draw(this.x, this.y, this.width, this.height);
+        // texture.draw(this.x, this.y, this.width, this.height);
+         GL11.glColor4f(0, 0, 0, 1);
+
+        // Начинаем рисовать квадрат с текстурой
+        glBegin(GL11.GL_QUADS);
+        {
+            GL11.glTexCoord2f(0, 0); glVertex2f(x - width / 2, y - height / 2);
+            GL11.glTexCoord2f(1, 0); glVertex2f(x + width / 2, y - height / 2);
+            GL11.glTexCoord2f(1, 1); glVertex2f(x + width / 2, y + height / 2);
+            GL11.glTexCoord2f(0, 1); glVertex2f(x - width / 2, y + height / 2);
+        }
+        glEnd();
     }
 }
