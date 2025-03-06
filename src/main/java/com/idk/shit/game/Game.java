@@ -17,7 +17,7 @@ import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
-import com.idk.shit.utils.rand;
+// import com.idk.shit.utils.rand;
 
 
 public class Game extends GameState {
@@ -61,13 +61,13 @@ public class Game extends GameState {
     }
 
     public void AddBlock( float left, float right, float b, float a){
-        rand randomizer = new rand();  
+        // rand randomizer = new rand();  
         // int texture_number= (int)(Math.random() * (textures.length- 0) + 0);// используем рандом чтобы получить случайную текстуру блока
         // path_to_block_texture=textures[texture_number];
-        float x = randomizer.rand_x(left, right); 
-        float y = (float) (Math.random() * (b - a) + a);
-        int res = randomizer.rand(new int[]{1, 2}, new int[]{score, 100});
-        int speed_dir= randomizer.rand(new int[]{-1, 1}, new int[]{1, 1});
+        float x = 0;
+        float y = (float) ((a+b)/2);
+        int res = 0;
+        int speed_dir= 1;
         if (res == 1) {
             block = new Object(x, y, block_width, block_height, 0.006f*speed_dir, Colours.CYAN);
         } else {
