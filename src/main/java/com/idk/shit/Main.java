@@ -82,6 +82,8 @@ public class Main {
         Texture blockTexture = TextureCache.getTexture("C:\\Users\\maksh\\Desktop\\python\\shit\\src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
         stateManager = new StateManager(window, inputManager, blockTexture, playerTexture);
 
+        // Инициализация игры
+        stateManager = new StateManager(window, inputManager);
     }
 
     private void loop() {

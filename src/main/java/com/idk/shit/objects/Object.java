@@ -1,40 +1,44 @@
 package com.idk.shit.objects;
 
-
 import com.idk.shit.graphics.Texture;
+import com.idk.shit.graphics.TextureCache;
+
 public class Object  {
     protected float x,y;
     protected  float width, height; // Размеры игрока
     protected float speed;   // Скорость перемещения игрока
     protected float[] colour;
+    private int textureId; // Идентификатор текстуры
     private Texture texture;
-    public Object(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
+    public Object(float startX, float startY, float width, float height, float speed, float[] colour, String texturePath) {
         this.x = startX;
         this.y = startY;
         this.width = width;
         this.height = height;
         this.speed = speed;
         this.colour = colour;
-        this.texture=texture;
+        this.texture = TextureCache.getTexture(texturePath); // Используем кэш текстур и используем из Map 
+        this.textureId = texture.getTextureID();
+
     }
     public float getLeft() {
         return x - width / 2;
     }
     
-    public float getRight() {
-        return x + width / 2;
-    }
+//     public float getRight() {
+//         return x + width / 2;
+//     }
     
-    public float getBottom() {
-        return y - height / 2;
-    }
+//     public float getBottom() {
+//         return y - height / 2;
+//     }
     
-    public float getTop() {
-        return y + height / 2;
-    }
-    public float getX() {
-        return x;
-    }
+//     public float getTop() {
+//         return y + height / 2;
+//     }
+//     public float getX() {
+//         return x;
+//     }
 
     public float getY() {
         return y;
@@ -91,11 +95,10 @@ public class Object  {
             a.y=this.getTop()+a.height/2;
         }
         dir = Direction.NONE;
-
     }
     
     
-    public void draw() {
-        this.texture.draw(this.x, this.y, this.width, this.height);
+    public void draw(){
+        texture.draw(this.x, this.y,this.width, this.height ); // рисуем текстуру используя draw от класса текстур
     }
 }

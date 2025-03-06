@@ -1,19 +1,22 @@
 package com.idk.shit.objects;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+// import org.lwjgl.opengl.GL11;
+// import static org.lwjgl.opengl.GL11.glBegin;
+// import static org.lwjgl.opengl.GL11.glEnd;
+// import static org.lwjgl.opengl.GL11.glVertex2f;
 
-import com.idk.shit.graphics.Texture;
+// // import com.idk.shit.graphics.Texture;
 
 public class Player extends Object { 
     protected float speed_y=-0.0f;
     protected float max_speed_y=0.06f;
     protected float accel_y=-0.003f;
-    public Player(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
-        super(startX, startY, width, height, speed, colour, texture);
+    private int textureId; // Идентификатор текстуры
+    private Texture texture;
+    public Player(float startX, float startY, float width, float height, float speed, float[] colour, String texturePath) {
+        super(startX, startY, width, height, speed, colour, texturePath);
+        this.texture = new Texture(texturePath); // Создаем объект текстуры
+        this.textureId = texture.getTextureID();
     }
     public boolean fall_down(){
         if(this.y<-1){
@@ -49,17 +52,8 @@ public class Player extends Object {
     public float height(){
         return height ;
     }
-    // @Override
-    // public void draw() {
-    //     glColor3f(0,0,0);
-    //     glBegin(GL_QUADS);
-
-    //     glVertex2f(x + width / 2f, y + height / 2f);
-    //     glVertex2f(x + width / 2f, y - height / 2f);
-    //     glVertex2f(x - width / 2f, y - height / 2f);
-    //     glVertex2f(x - width / 2f, y + height / 2f);
-
-    //     glEnd();
-
-    // }
+    @Override
+    public void draw() {
+        texture.draw(this.x, this.y, this.width, this.height);
+    }
 }
