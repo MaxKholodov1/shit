@@ -11,11 +11,8 @@ public abstract  class GameState {
     protected long window;
     protected State curState;
     protected InputManager inputManager;
-<<<<<<< Updated upstream
-    public GameState(State state, InputManager input){
-=======
     public GameState(long window, State state, InputManager input){
->>>>>>> Stashed changes
+        this.window = window;
         this.curState = state;
         this.inputManager = input;
     }

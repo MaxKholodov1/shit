@@ -1,9 +1,5 @@
 package com.idk.shit.game;
 
-<<<<<<< Updated upstream
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
-
-=======
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
@@ -17,66 +13,15 @@ import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
->>>>>>> Stashed changes
 import com.idk.shit.utils.InputManager;
+import com.idk.shit.utils.ScoreManager;
+import com.idk.shit.utils.rand;
 
 
 public class Game extends GameState {
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
 
-<<<<<<< Updated upstream
-    // private float block_height = 0.04f;
-    // private float block_width = 0.35f;
-
-    // long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
-   
-    // private Player player = new Player(0.0f, 0.0f, 0.2f, 0.13f, 0.02f,Colours.WHITE );
-    // private Object block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE);
- 
-
-
-    // private float speed_player_x = 0.05f;
-
-    // private float max_speed_y = 0.06f;
-    // private float accel_y = -0.003f;
-
-    // private int score = 0;
-
-    // private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - 0.05f;
-
-    public Game(InputManager inputManager) {
-        super(State._game_, inputManager); // Передаем window в родительский класс
-        this.inputManager = inputManager;
-        initGame();
-        // String label = String.valueOf(score);
-    }
-
-    // public void AddBlock( float left, float right, float b, float a){
-    //     float x = 0;
-    //     float y = (float) ((a+b)/2);
-    //     int res = 0;
-    //     int speed_dir= 1;
-    //     if (res == 1) {
-    //         block = new Object(x, y, block_width, block_height, 0.006f*speed_dir, Colours.CYAN);
-    //     } else {
-    //         block = new Object(x, y, block_width, block_height, 0.0f, Colours.PURPLE);
-    //     }
-    //     blocks.addLast(block);  
-    //     supposed_blocks.addLast(block);
-    // }
-
-    private void initGame() {
-        // float left = -1 + block_width / 2;
-        // float right = 1 - block_width / 2;
-        // AddBlock(0f, 0.001f, -0.4f, -0.5f);
-        // float prev_height;
-        // for (int i = 0; i < 6; ++i) {
-        //     prev_height = supposed_blocks.getLast().getTop();
-        //     float a = prev_height + max_height / 5;
-        //     float b = prev_height + max_height;
-        //     AddBlock(left, right, b, a);
-=======
     private float block_height = 0.04f;
     private float block_width = 0.35f;
     private Player player;
@@ -130,27 +75,12 @@ public class Game extends GameState {
             float a = prev_height + max_height / 5;
             float b = prev_height + max_height;
             AddBlock(left, right, b, a);
->>>>>>> Stashed changes
 
         }
     }
     
     @Override
     public State update() {
-<<<<<<< Updated upstream
-        // if (player.fall_down()==true){
-        //     cleanup();
-        //     this.curState = State._overgame_;
-        //     return this.curState;
-        // }
-        // if (inputManager.isKeyPressed(GLFW_KEY_LEFT)) {
-        //     player.update_object(-speed_player_x);
-        // } else if (inputManager.isKeyPressed(GLFW_KEY_RIGHT)) {
-        //     player.update_object(speed_player_x);
-        // } else {
-        //     player.update_object(0);
-        // }
-=======
         if (player.fall_down()==true){
             cleanup();
             this.curState = State._overgame_;
@@ -163,7 +93,6 @@ public class Game extends GameState {
         } else {
             player.update_object(0);
         }
->>>>>>> Stashed changes
 
         for (Object block : supposed_blocks) {
             float block_speed_x = block.getSpeed_x();
@@ -208,50 +137,22 @@ public class Game extends GameState {
             block.collision(player);
         }
 
-<<<<<<< Updated upstream
-        if (  inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            // blocks.clear();
-            // supposed_blocks.clear();
-=======
-        redButton.update(window);
+        redButton.update(this.window);
         if ( redButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
             if(score>ScoreManager.Load()){
                 ScoreManager.savebest_attamp(score);
             }
             blocks.clear();
             supposed_blocks.clear();
->>>>>>> Stashed changes
             cleanup();
             inputManager.cleanup();
             this.curState = State._menu_;
             return this.curState;
         }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         return this.curState;
     }
     @Override
     public void render() {
-<<<<<<< Updated upstream
-        // GL11.glEnable(GL11.GL_TEXTURE_2D);
-        // for (Object block : blocks) {
-        //     block.draw();
-        // }
-        // player.draw();
-    }
-    @Override
-    public void cleanup() {
-        // blocks.clear();
-        // supposed_blocks.clear();
-        // player = null;
-        // block = null;
-        // if (vg != 0) {
-        //     NanoVGGL3.nvgDelete(vg);
-        //     vg = 0; // Обнуляем ссылку на контекст
-        // }
-=======
         for (Object block : blocks) {
             block.draw();
         }
@@ -265,6 +166,5 @@ public class Game extends GameState {
         player = null;
         block = null;
         redButton = null;
->>>>>>> Stashed changes
     }   
 }

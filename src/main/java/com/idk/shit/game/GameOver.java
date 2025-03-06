@@ -2,17 +2,6 @@ package com.idk.shit.game;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
-<<<<<<< Updated upstream
-import com.idk.shit.utils.InputManager;
-
-public class GameOver extends GameState{
-    // long vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
-    private int score;
-
-    public GameOver(InputManager inputManager) {
-        super(State._overgame_, inputManager);
-        this.inputManager = inputManager;
-=======
 
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
@@ -24,15 +13,10 @@ public class GameOver extends GameState{
 
     public GameOver(long window, InputManager inputManager) {
         super(window, State._overgame_, inputManager);
->>>>>>> Stashed changes
         initGameOver();
     }
     protected boolean spaced=false;
     private void initGameOver(){
-<<<<<<< Updated upstream
-        String text ="Score: " + score;
-=======
->>>>>>> Stashed changes
 
     }
     @Override
@@ -47,9 +31,6 @@ public class GameOver extends GameState{
     }
     @Override
     public void render(){
-<<<<<<< Updated upstream
-=======
         redButton.draw();
->>>>>>> Stashed changes
     }
 }
