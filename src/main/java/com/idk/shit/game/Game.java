@@ -86,9 +86,9 @@ public class Game extends GameState {
             this.curState = State._overgame_;
             return this.curState;
         }
-        if (inputManager.isKeyPressed(GLFW_KEY_LEFT)) {
+        if (inputManager.isKeyPressed(GLFW_KEY_LEFT) && !inputManager.isKeyPressed(GLFW_KEY_RIGHT) ) {
             player.update_object(-speed_player_x);
-        } else if (inputManager.isKeyPressed(GLFW_KEY_RIGHT)) {
+        } else if (inputManager.isKeyPressed(GLFW_KEY_RIGHT) && !inputManager.isKeyPressed(GLFW_KEY_LEFT)) {
             player.update_object(speed_player_x);
         } else {
             player.update_object(0);

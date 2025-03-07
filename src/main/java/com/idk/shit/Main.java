@@ -36,7 +36,7 @@ public class Main {
     private long window;
     private StateManager stateManager;
     protected InputManager inputManager; // Создаем InputManager
-
+    Texture background, playerTexture, blockTexture;
     public void run() {
         System.out.println("Hello, LWJGL " + Version.getVersion() + "!");
 
@@ -77,8 +77,11 @@ public class Main {
         // Отображаем окно
         glfwShowWindow(window);
         GL.createCapabilities();
-        Texture playerTexture = TextureCache.getTexture("C:\\Users\\maksh\\Desktop\\python\\shit\\src\\main\\resources\\textures\\pngegg.png");
-        Texture blockTexture = TextureCache.getTexture("C:\\Users\\maksh\\Desktop\\python\\shit\\src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
+
+
+        background = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-06_21-31-49.png");
+        playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
+        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
         stateManager = new StateManager(window, inputManager, blockTexture, playerTexture);
 
     }
@@ -95,7 +98,7 @@ public class Main {
         while (!glfwWindowShouldClose(window)) {
             // Очищаем буфер цвета и глубины
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+            background.draw(0f, 0f, 2f, 2f);
             // Обновляем и рендерим игру
             stateManager.update();
             stateManager.render();

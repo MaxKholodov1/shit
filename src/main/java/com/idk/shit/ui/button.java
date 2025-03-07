@@ -57,12 +57,6 @@ public class button {
         return y;
     }
     public void draw() {
-        // if (isHovered) {
-        //     glColor3f(color[0] * 0.8f, color[1] * 0.8f, color[2] * 0.8f); 
-        // } else {
-        //     glColor3fv(color); 
-        // }
-        
         glColor3fv(color); 
         glBegin(GL11.GL_QUADS);
             glVertex2f(x - width / 2, y - height / 2); 

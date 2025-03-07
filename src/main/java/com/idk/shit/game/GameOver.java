@@ -2,7 +2,6 @@ package com.idk.shit.game;
 
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 
-import com.idk.shit.game.GameState.State;
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
