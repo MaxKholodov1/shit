@@ -8,6 +8,9 @@ public class Object  {
     protected float speed;   // Скорость перемещения игрока
     protected float[] colour;
     private Texture texture;
+    private float screen_width=500;
+    private float screen_height=800;
+    private float RATIO=screen_width/screen_height;
     public Object(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
         this.x = startX;
         this.y = startY;
@@ -48,7 +51,7 @@ public class Object  {
     public void update_object(float speed) {
         // Обновление позиции игрока на основе нажатых клавиш
         this.x+=speed;
-        if (this.x+width/2>=1 || this.x-width/2<=-1){
+        if (this.x+width/2>=RATIO || this.x-width/2<=-RATIO){
             this.speed=-speed;
         }
     }

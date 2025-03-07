@@ -1,25 +1,24 @@
 package com.idk.shit.game;
-
 import com.idk.shit.utils.InputManager;
+import com.idk.shit.graphics.Texture;
 
 public abstract  class GameState {
-    public enum State{
-        _menu_,
-        _game_,
-        _overgame_
-    }
     protected long window;
-    protected State curState;
+    protected StateManager stateManager;
     protected InputManager inputManager;
-    public GameState(long window, State state, InputManager input){
-        this.window = window;
-        this.curState = state;
-        this.inputManager = input;
+    protected Texture blockTexture;
+    protected Texture playerTexture;
+    public GameState(long window,InputManager inputManager, StateManager stateManager, Texture blockTexture, Texture playerTexture ){
+        this.window=window;
+        this.stateManager=stateManager;
+        this.inputManager=inputManager;
+        this.blockTexture=blockTexture;
+        this.playerTexture=playerTexture;
     }
-    public State update(){
-        return this.curState;
-    }
+    public abstract void update();
     public abstract void render();
+    // public abstract void cleanup();
+
     public void cleanup() {
 
     }

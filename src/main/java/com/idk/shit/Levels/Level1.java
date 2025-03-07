@@ -16,33 +16,39 @@ import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
 import com.idk.shit.utils.rand;
+import com.idk.shit.game.GameState;
+import com.idk.shit.game.StateManager;
+import com.idk.shit.game.GameOver;
+import com.idk.shit.game.Menu;
 
 
-public class Game extends GameState {
+
+
+
+
+
+public class Level1 extends GameState {
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
-
-    private float block_height = 0.04f;
-    private float block_width = 0.35f;
+    public float screen_height=800;
+    public float screen_width=500;
+    public float RATIO = (float)screen_width/(float)screen_height;
+    private float block_height = 0.045f;
+    private float block_width = 0.25f;
     private Player player;
     private Object block;
-   
-    private Texture blockTexture;
-    private Texture playerTexture;
-    private float speed_player_x = 0.05f;
-    private float max_speed_y = 0.06f;
-    private float accel_y = -0.003f;
+ 
+    private float speed_player_x = 0.03f;
+    private float max_speed_y = 0.08f;
+    private float accel_y = -0.004f;
     private int score = 0;
-    private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - 0.05f;
+    private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
     private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
 
 
 
-    public Game(long window,InputManager inputManager, Texture blockTexture, Texture playerTexture) {
-        super( window,State._game_, inputManager); // Передаем window в родительский класс
-        this.blockTexture = blockTexture;
-        this.playerTexture = playerTexture;
-
+    public Level1(long window,InputManager inputManager,StateManager stateManager, Texture blockTexture, Texture playerTexture) {
+        super( window, inputManager, stateManager, blockTexture, playerTexture ); // Передаем window в родительский класс
         initGame();
       
     }
@@ -64,15 +70,15 @@ public class Game extends GameState {
     }
 
     private void initGame() {
-        player = new Player(0.0f, 0.0f, 0.2f, 0.13f, 0.02f,Colours.WHITE, this.playerTexture);
+        player = new Player(0.0f, 0.0f, 0.15f, 0.17f, 0.02f,Colours.WHITE, this.playerTexture);
         block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE, this.blockTexture );
-        float left = -1 + block_width / 2;
-        float right = 1 - block_width / 2;
+        float left =  block_width / 2 - RATIO;
+        float right = - block_width / 2 + RATIO; 
         AddBlock(0f, 0.001f, -0.4f, -0.5f);
         float prev_height;
         for (int i = 0; i < 6; ++i) {
             prev_height = supposed_blocks.getLast().getTop();
-            float a = prev_height + max_height / 5;
+            float a = prev_height + max_height / 2;
             float b = prev_height + max_height;
             AddBlock(left, right, b, a);
 
@@ -80,11 +86,11 @@ public class Game extends GameState {
     }
     
     @Override
-    public State update() {
+    public void  update() {
         if (player.fall_down()==true){
             cleanup();
-            this.curState = State._overgame_;
-            return this.curState;
+            stateManager.setState(new GameOver(window, inputManager, stateManager, blockTexture, playerTexture));
+            return;
         }
         if (inputManager.isKeyPressed(GLFW_KEY_LEFT) && !inputManager.isKeyPressed(GLFW_KEY_RIGHT) ) {
             player.update_object(-speed_player_x);
@@ -126,10 +132,10 @@ public class Game extends GameState {
         float prev_height;
         for (int i = 0; i < cnt; ++i) {
             prev_height = supposed_blocks.getLast().getY();
-            float a = prev_height + max_height / 3;
+            float a = prev_height + max_height / 2;
             float b = prev_height + max_height;
-            float left = -1 + block_width / 2;
-            float right = 1 - block_width / 2;
+            float left =  block_width / 2  - RATIO;
+            float right = -block_width / 2 + RATIO;
             AddBlock(left, right, b, a);
         }
 
@@ -139,17 +145,12 @@ public class Game extends GameState {
 
         redButton.update(this.window);
         if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            if(score>ScoreManager.Load()){
-                ScoreManager.savebest_attamp(score);
-            }
-            blocks.clear();
-            supposed_blocks.clear();
+            stateManager.setState(new Menu(window, inputManager, stateManager, blockTexture, playerTexture));
             cleanup();
             inputManager.cleanup();
-            this.curState = State._menu_;
-            return this.curState;
+            return;
+            
         }
-        return this.curState;
     }
     @Override
     public void render() {

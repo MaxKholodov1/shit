@@ -10,8 +10,12 @@ import com.idk.shit.graphics.Texture;
 
 public class Player extends Object { 
     protected float speed_y=-0.0f;
-    protected float max_speed_y=0.06f;
-    protected float accel_y=-0.003f;
+    protected float max_speed_y=0.08f;
+    protected float accel_y=-0.004f;
+    private float screen_width=500;
+    private float screen_height=800;
+    private float RATIO=screen_width/screen_height;
+
     public Player(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
         super(startX, startY, width, height, speed, colour, texture);
     }
@@ -26,15 +30,15 @@ public class Player extends Object {
     public void update_object(float speed) {
         speed_y+=accel_y;
         this.y+=speed_y;
-        if(this.x<-1){
-            this.x=2+this.x;
+        if(this.x<-RATIO){
+            this.x=2*RATIO+this.x;
         }
         this.x+=speed;
         // if (this.y<-1){
         //     this.y=0.5f;
         // }
-        if (this.x>1){
-            this.x=-2+this.x;
+        if (this.x>RATIO){
+            this.x=-2*RATIO+this.x;
         }
     }
     public void change_speed(){
