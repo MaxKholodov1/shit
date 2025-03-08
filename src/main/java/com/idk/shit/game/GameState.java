@@ -6,14 +6,10 @@ public abstract  class GameState {
     protected long window;
     protected StateManager stateManager;
     protected InputManager inputManager;
-    protected Texture blockTexture;
-    protected Texture playerTexture;
-    public GameState(long window,InputManager inputManager, StateManager stateManager, Texture blockTexture, Texture playerTexture ){
+    public GameState(long window,InputManager inputManager, StateManager stateManager){
         this.window=window;
         this.stateManager=stateManager;
         this.inputManager=inputManager;
-        this.blockTexture=blockTexture;
-        this.playerTexture=playerTexture;
     }
     public abstract void update();
     public abstract void render();

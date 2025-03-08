@@ -11,8 +11,8 @@ import com.idk.shit.Levels.*;
 public class GameOver extends GameState{
     private button gameButton = new button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN);
 
-    public GameOver(long window, InputManager inputManager, StateManager stateManager, Texture blockTexture, Texture playerTexture) {
-        super(window, inputManager, stateManager, blockTexture, playerTexture);
+    public GameOver(long window, InputManager inputManager, StateManager stateManager) {
+        super(window, inputManager, stateManager);
         initGameOver();
     }
     protected boolean spaced=false;
@@ -24,7 +24,7 @@ public class GameOver extends GameState{
         gameButton.update(window);
         if (gameButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE))  {
             inputManager.cleanup();
-            stateManager.setState(new Level1(window, inputManager, stateManager, blockTexture, playerTexture));
+            stateManager.setState(new Level1(window, inputManager, stateManager));
 
         }
     }

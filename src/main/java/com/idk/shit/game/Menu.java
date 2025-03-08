@@ -13,8 +13,8 @@ import com.idk.shit.Levels.*;
 public class Menu extends GameState {
     private button startButton = new button(0.f, 0.f, 1.5f, 1f, "start",Colours.RED);
 
-    public Menu(long window, InputManager inputManager, StateManager stateManager, Texture blockTexture, Texture playerTexture) {
-        super(window, inputManager, stateManager, blockTexture, playerTexture);
+    public Menu(long window, InputManager inputManager, StateManager stateManager) {
+        super(window, inputManager, stateManager);
         initMenu();
     }
     private void initMenu(){
@@ -24,7 +24,7 @@ public class Menu extends GameState {
     public void update(){
         startButton.update(window);
         if (startButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            stateManager.setState(new Level1(window, inputManager, stateManager, blockTexture, playerTexture));
+            stateManager.setState(new Level1(window, inputManager, stateManager));
             inputManager.cleanup();;
         }
     }

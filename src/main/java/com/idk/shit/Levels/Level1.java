@@ -8,6 +8,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import com.idk.shit.graphics.Texture;
+import com.idk.shit.graphics.TextureCache;
 import com.idk.shit.graphics.Shader;
 
 import com.idk.shit.objects.Object;
@@ -45,12 +46,15 @@ public class Level1 extends GameState {
     private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
     private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
+    private Texture playerTexture;
+    private Texture blockTexture;
+
     // protected Shader shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
 
 
 
-    public Level1(long window,InputManager inputManager,StateManager stateManager, Texture blockTexture, Texture playerTexture) {
-        super( window, inputManager, stateManager, blockTexture, playerTexture ); // Передаем window в родительский класс
+    public Level1(long window,InputManager inputManager,StateManager stateManager) {
+        super( window, inputManager, stateManager); // Передаем window в родительский класс
         initGame();
       
     }
@@ -72,6 +76,8 @@ public class Level1 extends GameState {
     }
 
     private void initGame() {
+        playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
+        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
         player = new Player(0.0f, 0.0f, 0.15f, 0.17f, 0.02f,Colours.WHITE, this.playerTexture);
         block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE, this.blockTexture );
         float left =  block_width / 2 - RATIO;
@@ -91,7 +97,7 @@ public class Level1 extends GameState {
     public void  update() {
         if (player.fall_down()==true){
             cleanup();
-            stateManager.setState(new GameOver(window, inputManager, stateManager, blockTexture, playerTexture));
+            stateManager.setState(new GameOver(window, inputManager, stateManager));
             return;
         }
         if (inputManager.isKeyPressed(GLFW_KEY_LEFT) && !inputManager.isKeyPressed(GLFW_KEY_RIGHT) ) {
@@ -147,7 +153,7 @@ public class Level1 extends GameState {
 
         redButton.update(this.window);
         if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            stateManager.setState(new Menu(window, inputManager, stateManager, blockTexture, playerTexture));
+            stateManager.setState(new Menu(window, inputManager, stateManager));
             cleanup();
             inputManager.cleanup();
             return;

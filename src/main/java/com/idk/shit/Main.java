@@ -73,7 +73,7 @@ public class Main {
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
         stateManager = new StateManager();
-        stateManager.setState(new Level1 (window,inputManager, stateManager, blockTexture, playerTexture));
+        stateManager.setState(new Level1 (window,inputManager, stateManager));
 
     }
 
