@@ -24,7 +24,7 @@ public class GameOver extends GameState{
         gameButton.update(window);
         if (gameButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE))  {
             inputManager.cleanup();
-            stateManager.setState(new Level2(window, inputManager, stateManager, blockTexture, playerTexture));
+            stateManager.setState(new Level1(window, inputManager, stateManager, blockTexture, playerTexture));
 
         }
     }

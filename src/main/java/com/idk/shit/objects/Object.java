@@ -2,15 +2,20 @@ package com.idk.shit.objects;
 
 
 import com.idk.shit.graphics.Texture;
+import com.idk.shit.graphics.Shader;
+
 public class Object  {
     protected float x,y;
     protected  float width, height; // Размеры игрока
     protected float speed;   // Скорость перемещения игрока
     protected float[] colour;
+    // protected Shader shader;
     private Texture texture;
-    private float screen_width=500;
-    private float screen_height=800;
+    private float screen_width=650;
+    private float screen_height=1000;
     private float RATIO=screen_width/screen_height;
+    // private Shader shader;
+
     public Object(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
         this.x = startX;
         this.y = startY;
@@ -19,6 +24,7 @@ public class Object  {
         this.speed = speed;
         this.colour = colour;
         this.texture=texture;
+        // this.shader =shader;
     }
     public float getLeft() {
         return x - width / 2;
@@ -99,6 +105,11 @@ public class Object  {
     
     
     public void draw() {
+        // this.shader.use();
+        // shader.setUniform("lightPos", 1.0f, 1.0f, 1.0f); // Пример передачи параметров освещения
+        // shader.setUniform("lightColor", 1.0f, 1.0f, 1.0f);
+        // shader.setUniform("viewPos", 0.0f, 0.0f, 1.0f);
+        // texture.draw(x, y, width, height); // Отрисовка текстуры
         this.texture.draw(this.x, this.y, this.width, this.height);
     }
 }

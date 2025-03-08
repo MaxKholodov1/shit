@@ -6,7 +6,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import com.idk.shit.ui.button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
-import com.idk.shit.graphics.Texture;
+import com.idk.shit.graphics.*;
 import com.idk.shit.Levels.*;
 
 
@@ -24,7 +24,8 @@ public class Menu extends GameState {
     public void update(){
         startButton.update(window);
         if (startButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            stateManager.setState(new Level2(window, inputManager, stateManager, blockTexture, playerTexture));
+            stateManager.setState(new Level1(window, inputManager, stateManager, blockTexture, playerTexture));
+            inputManager.cleanup();;
         }
     }
     @Override

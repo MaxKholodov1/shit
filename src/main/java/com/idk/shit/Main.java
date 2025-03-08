@@ -1,38 +1,13 @@
 package com.idk.shit;
 
 import org.lwjgl.Version;
-import static org.lwjgl.glfw.GLFW.GLFW_FALSE;
-import static org.lwjgl.glfw.GLFW.GLFW_RESIZABLE;
-import static org.lwjgl.glfw.GLFW.GLFW_TRUE;
-import static org.lwjgl.glfw.GLFW.GLFW_VISIBLE;
-import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.glfw.GLFW.glfwDefaultWindowHints;
-import static org.lwjgl.glfw.GLFW.glfwDestroyWindow;
-import static org.lwjgl.glfw.GLFW.glfwInit;
-import static org.lwjgl.glfw.GLFW.glfwMakeContextCurrent;
-import static org.lwjgl.glfw.GLFW.glfwPollEvents;
-import static org.lwjgl.glfw.GLFW.glfwSetErrorCallback;
-import static org.lwjgl.glfw.GLFW.glfwShowWindow;
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
-import static org.lwjgl.glfw.GLFW.glfwSwapInterval;
-import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.glfw.GLFW.glfwWindowHint;
-import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
-import static org.lwjgl.opengl.GL11.GL_PROJECTION;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL11.glClearColor;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glMatrixMode;
-import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.idk.shit.Levels.Level1;
-import com.idk.shit.Levels.Level2;
 import com.idk.shit.game.StateManager;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.graphics.Texture;
@@ -43,10 +18,11 @@ public class Main {
     private long window;
     private StateManager stateManager;
     protected InputManager inputManager; // Создаем InputManager
-    protected  int screen_width=500;
-    protected  int screen_height=800;
+    protected  int screen_width=650;
+    protected  int screen_height=1000;
     protected float RATIO;
     Texture background, playerTexture, blockTexture;
+
     public void run() {
         System.out.println("Hello, LWJGL " + Version.getVersion() + "!");
 
@@ -92,12 +68,12 @@ public class Main {
         glOrtho(-RATIO, RATIO, -1, 1, -1, 1);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
-
+        // shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
         background = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-06_21-31-49.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
         stateManager = new StateManager();
-        stateManager.setState(new Level2(window,inputManager, stateManager, blockTexture, playerTexture));
+        stateManager.setState(new Level1 (window,inputManager, stateManager, blockTexture, playerTexture));
 
     }
 

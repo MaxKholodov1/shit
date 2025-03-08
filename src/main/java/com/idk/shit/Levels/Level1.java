@@ -8,6 +8,7 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import com.idk.shit.graphics.Texture;
+import com.idk.shit.graphics.Shader;
 
 import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
@@ -30,8 +31,8 @@ import com.idk.shit.game.Menu;
 public class Level1 extends GameState {
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
-    public float screen_height=800;
-    public float screen_width=500;
+    public float screen_height=1000;
+    public float screen_width=650;
     public float RATIO = (float)screen_width/(float)screen_height;
     private float block_height = 0.045f;
     private float block_width = 0.25f;
@@ -39,11 +40,12 @@ public class Level1 extends GameState {
     private Object block;
  
     private float speed_player_x = 0.03f;
-    private float max_speed_y = 0.08f;
-    private float accel_y = -0.004f;
+    private float max_speed_y = 0.07f;
+    private float accel_y = -0.003f;
     private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
     private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
+    // protected Shader shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
 
 
 

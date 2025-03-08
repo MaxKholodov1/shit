@@ -7,13 +7,13 @@ import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
 import com.idk.shit.graphics.Texture;
-
+// import com.idk.shit.graphics.Shader;
 public class Player extends Object { 
     protected float speed_y=-0.0f;
-    protected float max_speed_y=0.08f;
-    protected float accel_y=-0.004f;
-    private float screen_width=500;
-    private float screen_height=800;
+    protected float max_speed_y=0.07f;
+    protected float accel_y=-0.003f;
+    private float screen_width=650;
+    private float screen_height=1000;
     private float RATIO=screen_width/screen_height;
 
     public Player(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {

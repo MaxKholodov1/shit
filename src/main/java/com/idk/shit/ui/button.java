@@ -15,8 +15,8 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
 public class button {
-    protected float screen_height=800;
-    protected float screen_width=500;
+    protected float screen_height=1000;
+    protected float screen_width=650;
 
     private float x, y, width, height;
     private boolean isHovered = false;
