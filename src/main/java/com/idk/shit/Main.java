@@ -11,7 +11,7 @@ import com.idk.shit.game.state.State;
 import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Play;
 import com.idk.shit.game.views.ViewManager;
 import com.idk.shit.game.views.view.ApplicationView;
-import com.idk.shit.game.views.view.Implementations.PlayingView;
+import com.idk.shit.game.views.view.Implementations.MenuView;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
@@ -24,7 +24,7 @@ public class Main {
     protected  int screen_width=650;
     protected  int screen_height=1000;
     protected float RATIO;
-    protected PlayingView playingView;
+    protected MenuView menuView;
     protected State state;
     Texture background, playerTexture, blockTexture;
 
@@ -77,11 +77,10 @@ public class Main {
         background = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-06_21-31-49.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
-        viewManager = new ViewManager(window, inputManager);
         state =new State();
-        state.State();
-        playingView =new PlayingView (state, window, inputManager);
-        viewManager.setState(playingView);
+        viewManager = new ViewManager(window, inputManager, state);
+        menuView =new MenuView (state, window, inputManager);
+        viewManager.setState(menuView);
 
     }
 

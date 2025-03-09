@@ -9,6 +9,7 @@ import com.idk.shit.game.state.ValueObjects.Implementations.Menu;
 import com.idk.shit.game.views.view.ApplicationView;
 import com.idk.shit.game.views.view.Implementations.GameOverView;
 import com.idk.shit.game.views.view.Implementations.MenuView;
+import com.idk.shit.game.views.view.Implementations.PlayingView;
 import com.idk.shit.utils.InputManager;
 
 public class ViewManager {
@@ -16,21 +17,22 @@ public class ViewManager {
     public ApplicationView currentView;
     public long window;
     public InputManager inputManager;
-    public ViewManager(long window, InputManager inputManager){
+    public ViewManager(long window, InputManager inputManager, State currentState){
         this.window=window;
         this.inputManager=inputManager;
+        this.currentState=currentState;
     }
-    public void setState(ApplicationView newState){
+    public void setState(ApplicationView newView){
         if(currentView!=null){
             currentView.cleanup(); // Освобождаем ресурсы предыдущего состояния
             currentView = null;
-            currentView=newState;
+            currentView=newView;
             System.gc();
         }
         else{
             currentView = null;
-            currentView=newState;
-            newState = null;
+            currentView=newView;
+            newView = null;
             System.gc();
         }
     }
@@ -54,15 +56,15 @@ public class ViewManager {
 
     private void UpdateViewByState(){
         ApplicationState state = currentState.GetApplicationState();
-        if(state instanceof Menu){
+        if(state instanceof Menu && !(currentView instanceof MenuView)){
             currentView = new MenuView(currentState, window, inputManager );
         }
 
-        if(state instanceof GameOver){
+        if(state instanceof GameOver && !(currentView instanceof GameOverView)){
             currentView = new GameOverView(currentState,window, inputManager );
         }
-        if (state instanceof Play){
-            currentView = new GameOverView(currentState ,window, inputManager );
+        if (state instanceof Play && !(currentView instanceof PlayingView)){
+            currentView = new PlayingView(currentState ,window, inputManager );
         }
     }
 }

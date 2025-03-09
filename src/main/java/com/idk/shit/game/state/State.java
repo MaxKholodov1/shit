@@ -12,8 +12,8 @@ public class State {
         return CurrentState;
     }
 
-    public void State(){
-        CurrentState = new Play();
+    public State(){
+        CurrentState = new Menu();
     }
 
     public void Play() throws Exception{
