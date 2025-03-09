@@ -7,8 +7,11 @@ import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-import com.idk.shit.Levels.Level1;
+import com.idk.shit.game.state.State;
+import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Play;
 import com.idk.shit.game.views.ViewManager;
+import com.idk.shit.game.views.view.ApplicationView;
+import com.idk.shit.game.views.view.Implementations.PlayingView;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
@@ -16,11 +19,13 @@ import com.idk.shit.graphics.TextureCache;
 
 public class Main {
     private long window;
-    private ViewManager stateManager;
+    private ViewManager viewManager;
     protected InputManager inputManager; // Создаем InputManager
     protected  int screen_width=650;
     protected  int screen_height=1000;
     protected float RATIO;
+    protected PlayingView playingView;
+    protected State state;
     Texture background, playerTexture, blockTexture;
 
     public void run() {
@@ -72,8 +77,11 @@ public class Main {
         background = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-06_21-31-49.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
-        stateManager = new ViewManager();
-        stateManager.setState(new Level1 (window,inputManager, stateManager));
+        viewManager = new ViewManager(window, inputManager);
+        state =new State();
+        state.State();
+        playingView =new PlayingView (state, window, inputManager);
+        viewManager.setState(playingView);
 
     }
 
@@ -91,8 +99,8 @@ public class Main {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             background.draw(0f, 0f, 2*RATIO, 2);
             // Обновляем и рендерим игру
-            stateManager.update();
-            stateManager.render();
+            viewManager.update();
+            viewManager.render();
             // Меняем буферы экрана (двойная буферизация)
             glfwSwapBuffers(window);
 

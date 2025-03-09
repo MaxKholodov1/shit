@@ -24,8 +24,8 @@ public class MenuView extends ApplicationView {
     public void update() throws Exception{
         startButton.update(window);
         if (startButton.isClicked() || inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            state.Play();;
-            inputManager.cleanup();;
+            state.Play();
+            inputManager.cleanup();
         }
     }
     @Override

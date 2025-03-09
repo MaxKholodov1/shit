@@ -1,4 +1,4 @@
-package com.idk.shit.Levels;
+package com.idk.shit.game.views.view.Implementations;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -9,10 +9,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
-import com.idk.shit.game.views.ViewManager;
+import com.idk.shit.game.state.State;
 import com.idk.shit.game.views.view.ApplicationView;
-import com.idk.shit.game.views.view.Implementations.GameOverView;
-import com.idk.shit.game.views.view.Implementations.MenuView;
 import com.idk.shit.graphics.Shader;
 
 import com.idk.shit.objects.Object;
@@ -23,13 +21,7 @@ import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
 import com.idk.shit.utils.rand;
 
-
-
-
-
-
-
-public class Level1 extends ApplicationView {
+public class PlayingView extends ApplicationView {
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
     public float screen_height=1000;
@@ -53,8 +45,8 @@ public class Level1 extends ApplicationView {
 
 
 
-    public Level1(long window,InputManager inputManager,ViewManager stateManager) {
-        super( window, inputManager, stateManager); // Передаем window в родительский класс
+    public PlayingView(State state, long window, InputManager inputManager) {
+        super( state, window, inputManager); // Передаем window в родительский класс
         initGame();
       
     }
@@ -94,10 +86,10 @@ public class Level1 extends ApplicationView {
     }
     
     @Override
-    public void  update() {
+    public void  update() throws Exception {
         if (player.fall_down()==true){
             cleanup();
-            stateManager.setState(new GameOverView(window, inputManager, stateManager));
+            state.GameOver();
             return;
         }
         if (inputManager.isKeyPressed(GLFW_KEY_LEFT) && !inputManager.isKeyPressed(GLFW_KEY_RIGHT) ) {
@@ -153,7 +145,7 @@ public class Level1 extends ApplicationView {
 
         redButton.update(this.window);
         if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            stateManager.setState(new MenuView(window, inputManager, stateManager));
+            state.Menu();
             cleanup();
             inputManager.cleanup();
             return;

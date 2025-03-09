@@ -12,8 +12,8 @@ public class State {
         return CurrentState;
     }
 
-    public State(){
-        CurrentState = new Menu();
+    public void State(){
+        CurrentState = new Play();
     }
 
     public void Play() throws Exception{
@@ -29,6 +29,14 @@ public class State {
     public void GameOver() throws Exception{
         if(CurrentState instanceof Play){
             CurrentState = new GameOver();
+        }else{
+            throw new Exception();
+        }
+        
+    }
+    public void Menu() throws Exception{
+        if(CurrentState instanceof Play){
+            CurrentState = new Menu();
         }else{
             throw new Exception();
         }
