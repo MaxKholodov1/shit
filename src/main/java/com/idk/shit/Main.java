@@ -8,7 +8,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 import com.idk.shit.Levels.Level1;
-import com.idk.shit.game.StateManager;
+import com.idk.shit.game.views.ViewManager;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
@@ -16,7 +16,7 @@ import com.idk.shit.graphics.TextureCache;
 
 public class Main {
     private long window;
-    private StateManager stateManager;
+    private ViewManager stateManager;
     protected InputManager inputManager; // Создаем InputManager
     protected  int screen_width=650;
     protected  int screen_height=1000;
@@ -72,7 +72,7 @@ public class Main {
         background = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-06_21-31-49.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
-        stateManager = new StateManager();
+        stateManager = new ViewManager();
         stateManager.setState(new Level1 (window,inputManager, stateManager));
 
     }

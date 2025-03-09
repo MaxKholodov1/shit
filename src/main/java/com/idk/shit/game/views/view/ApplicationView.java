@@ -1,17 +1,18 @@
-package com.idk.shit.game;
+package com.idk.shit.game.views.view;
+import com.idk.shit.game.state.State;
 import com.idk.shit.utils.InputManager;
-import com.idk.shit.graphics.Texture;
 
-public abstract  class GameState {
+public abstract  class ApplicationView {
     protected long window;
-    protected StateManager stateManager;
     protected InputManager inputManager;
-    public GameState(long window,InputManager inputManager, StateManager stateManager){
+    protected State state;
+
+    public ApplicationView(State state, long window,InputManager inputManager){
+        this.state = state;
         this.window=window;
-        this.stateManager=stateManager;
         this.inputManager=inputManager;
     }
-    public abstract void update();
+    public abstract void update() throws Exception;
     public abstract void render();
     // public abstract void cleanup();
 

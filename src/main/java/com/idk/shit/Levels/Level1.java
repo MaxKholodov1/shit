@@ -9,6 +9,10 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
+import com.idk.shit.game.views.ViewManager;
+import com.idk.shit.game.views.view.ApplicationView;
+import com.idk.shit.game.views.view.Implementations.GameOverView;
+import com.idk.shit.game.views.view.Implementations.MenuView;
 import com.idk.shit.graphics.Shader;
 
 import com.idk.shit.objects.Object;
@@ -18,10 +22,6 @@ import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
 import com.idk.shit.utils.rand;
-import com.idk.shit.game.GameState;
-import com.idk.shit.game.StateManager;
-import com.idk.shit.game.GameOver;
-import com.idk.shit.game.Menu;
 
 
 
@@ -29,7 +29,7 @@ import com.idk.shit.game.Menu;
 
 
 
-public class Level1 extends GameState {
+public class Level1 extends ApplicationView {
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
     public float screen_height=1000;
@@ -53,7 +53,7 @@ public class Level1 extends GameState {
 
 
 
-    public Level1(long window,InputManager inputManager,StateManager stateManager) {
+    public Level1(long window,InputManager inputManager,ViewManager stateManager) {
         super( window, inputManager, stateManager); // Передаем window в родительский класс
         initGame();
       
@@ -97,7 +97,7 @@ public class Level1 extends GameState {
     public void  update() {
         if (player.fall_down()==true){
             cleanup();
-            stateManager.setState(new GameOver(window, inputManager, stateManager));
+            stateManager.setState(new GameOverView(window, inputManager, stateManager));
             return;
         }
         if (inputManager.isKeyPressed(GLFW_KEY_LEFT) && !inputManager.isKeyPressed(GLFW_KEY_RIGHT) ) {
@@ -153,7 +153,7 @@ public class Level1 extends GameState {
 
         redButton.update(this.window);
         if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            stateManager.setState(new Menu(window, inputManager, stateManager));
+            stateManager.setState(new MenuView(window, inputManager, stateManager));
             cleanup();
             inputManager.cleanup();
             return;
