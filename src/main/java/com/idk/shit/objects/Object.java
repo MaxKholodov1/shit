@@ -2,7 +2,6 @@ package com.idk.shit.objects;
 
 
 import com.idk.shit.graphics.Texture;
-import com.idk.shit.graphics.Shader;
 
 public class Object  {
     protected float x,y;

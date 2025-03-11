@@ -69,8 +69,8 @@ public class PlayingView extends ApplicationView {
 
     private void initGame() {
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
-        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
-        player = new Player(0.0f, 0.0f, 0.15f, 0.17f, 0.02f,Colours.WHITE, this.playerTexture);
+        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
+        player = new Player(0.0f, 0.0f, 0.15f, 0.23f, 0.02f,Colours.WHITE, this.playerTexture);
         block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE, this.blockTexture );
         float left =  block_width / 2 - RATIO;
         float right = - block_width / 2 + RATIO; 

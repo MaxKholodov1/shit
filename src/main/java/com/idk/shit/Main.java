@@ -55,7 +55,7 @@ public class Main {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // Разрешаем изменение размера окна
 
         // Создание окна
-        this.window = glfwCreateWindow(screen_width, screen_height, "hello, world!", NULL, NULL);
+        this.window = glfwCreateWindow(screen_width, screen_height, "jump", NULL, NULL);
         this.inputManager = new InputManager();
         inputManager.registerCallbacks(window);
         if (window == NULL)
@@ -74,9 +74,9 @@ public class Main {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         // shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
-        background = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-06_21-31-49.png");
+        background = TextureCache.getTexture("src\\main\\resources\\textures\\image.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
-        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\photo_2025-03-03_11-41-26.jpg.png");
+        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
         state =new State();
         viewManager = new ViewManager(window, inputManager, state);
         menuView =new MenuView (state, window, inputManager);
