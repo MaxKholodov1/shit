@@ -12,15 +12,15 @@ import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
 import com.idk.shit.game.state.State;
 import com.idk.shit.game.views.view.ApplicationView;
-import com.idk.shit.game.views.view.Implementations.PlaysView.*;
-import org.lwjgl.nanovg.NanoVG;
-import org.lwjgl.nanovg.NanoVGGL3;
+
+
 import com.idk.shit.objects.Meteor;
 
 import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
 import com.idk.shit.objects.PrevMeteor;
 import com.idk.shit.ui.Button;
+import com.idk.shit.ui.TextRenderer;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.rand;
@@ -46,7 +46,7 @@ public class Level2View extends ApplicationView {
     private float accel_y = -0.002f;
     private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
-    private Button redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg);
+    private Button redButton;
     private Texture playerTexture;
     private Texture blockTexture;
     private Texture meteorTexture;
@@ -55,8 +55,9 @@ public class Level2View extends ApplicationView {
 
 
 
-    public Level2View(State state, long window, InputManager inputManager, long vg) {
-        super( state, window, inputManager, vg); // Передаем window в родительский класс
+    public Level2View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
+        super( state, window, inputManager, vg, textRenderer); // Передаем window в родительский класс
+        redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg, textRenderer);
         initGame();
       
     }
@@ -228,6 +229,5 @@ public class Level2View extends ApplicationView {
         supposed_blocks.clear();
         player = null;
         block = null;
-        // redButton = null;
     }   
 }

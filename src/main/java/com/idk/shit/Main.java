@@ -17,6 +17,7 @@ import com.idk.shit.game.views.view.Implementations.MenuView;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
+import com.idk.shit.ui.TextRenderer;
 
 
 public class Main {
@@ -30,6 +31,7 @@ public class Main {
     protected State state;
     protected long vg;
     Texture background, playerTexture, blockTexture;
+    TextRenderer textRenderer;
 
     public void run() {
         System.out.println("Hello, LWJGL " + Version.getVersion() + "!");
@@ -78,12 +80,13 @@ public class Main {
         glLoadIdentity();
         // shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
         vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
+        textRenderer = new TextRenderer(vg);
         background = TextureCache.getTexture("src\\main\\resources\\textures\\image.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
         state =new State();
-        viewManager = new ViewManager(window, inputManager, state, vg);
-        menuView =new MenuView (state, window, inputManager, vg);
+        viewManager = new ViewManager(window, inputManager, state, vg, textRenderer);
+        menuView =new MenuView (state, window, inputManager, vg, textRenderer);
         viewManager.setState(menuView);
 
     }

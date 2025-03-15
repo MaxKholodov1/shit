@@ -30,7 +30,7 @@ public class Button {
     private float  RATIO= (float)(screen_width/screen_height);
     TextRenderer textRenderer;
 
-    public Button(float x, float y, float width, float height, String label,float[] color, long vg) {
+    public Button(float x, float y, float width, float height, String label,float[] color, long vg,TextRenderer textRenderer) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -38,7 +38,7 @@ public class Button {
         this.color = color;
         this.label = label;
         this.vg = vg;
-        textRenderer = new TextRenderer(this.vg);
+        this.textRenderer = textRenderer;
 
     }
 
