@@ -28,6 +28,7 @@ public class Button {
     private String label;
     private long vg;
     private float  RATIO= (float)(screen_width/screen_height);
+    TextRenderer textRenderer;
 
     public Button(float x, float y, float width, float height, String label,float[] color, long vg) {
         this.x = x;
@@ -37,6 +38,8 @@ public class Button {
         this.color = color;
         this.label = label;
         this.vg = vg;
+        textRenderer = new TextRenderer(this.vg);
+
     }
 
     public float left() {
@@ -69,8 +72,8 @@ public class Button {
             glVertex2f(x + width / 2, y + height / 2); 
             glVertex2f(x - width / 2, y + height / 2); 
         glEnd();
-        TextRenderer textRenderer = new TextRenderer(x, y, label, Colours.BROWN, vg, height, width);
-        textRenderer.drawText( );
+        
+        textRenderer.drawText(this.x, this.y, label, color, vg, this.height, this.width );
     }
     
    

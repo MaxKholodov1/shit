@@ -21,25 +21,14 @@ import com.idk.shit.Main;
 public class TextRenderer {
     protected float screen_height=1000;
     protected float screen_width=650;
-    private float x;
-    private float y;
-    private String label;
     private float[] color; 
-    private long vg; 
     private float max_height;
     private float max_width;
+    private long vg;
     private String fontName = "roboto"; // Имя шрифта
     float RATIO=(float)screen_width/(float)screen_height;
-
-
-    public TextRenderer(float x, float y, String label,float[] color,  long vg, float max_height,float  max_width ) {
-        this.x = (x+RATIO)/(2*RATIO)*screen_width;
-        this.y =(1-(y+1)/2) *screen_height;
-        this.label = label;
-        this.color = color;
+    public TextRenderer(long vg ) {
         this.vg=vg;
-        this.max_height=max_height/2*screen_height;
-        this.max_width=max_width/2*screen_width;
         loadFont();
     }
     private void loadFont() {
@@ -60,7 +49,7 @@ public class TextRenderer {
 
                 String fontPath = fontFile.getAbsolutePath();
 
-                int font = NanoVG.nvgCreateFont(vg, fontName, fontPath);
+                int font = NanoVG.nvgCreateFont(this.vg, fontName, fontPath);
                 if (font == -1) {
                     System.err.println("Не удалось загрузить шрифт!");
                 } 
@@ -74,13 +63,13 @@ public class TextRenderer {
         }
     }
 
-    private float  calc( float max_width,float  max_height){
+    private float  calc( float max_width,float  max_height, String label){
         float fontSize = 60.0f; 
         float[] bounds = new float[4];
 
         while (true) {
             nvgFontSize(vg, fontSize);
-            nvgTextBounds(vg, 0, 0, this.label, bounds);
+            nvgTextBounds(vg, 0, 0, label, bounds);
 
             float textWidth = bounds[2] - bounds[0]; // Ширина текста
             float textHeight = bounds[3] - bounds[1]; // Высота текста
@@ -98,14 +87,18 @@ public class TextRenderer {
         return fontSize;
     }
 
-    public void update_text(String new_text){
-        this.label=new_text;
-        calc(this.max_width, this.max_height);
+    public void update_text(String new_text, String label){
+        label=new_text;
+        calc(this.max_width, this.max_height, label);
     }
 
     public void drawText(float x, float y, String label,float[] color,  long vg, float max_height,float  max_width ) {
+        x = (x+RATIO)/(2*RATIO)*screen_width;
+        y =(1-(y+1)/2) *screen_height;
+        max_height=max_height/2*screen_height;
+        max_width=max_width/2*screen_width;
         nvgBeginFrame(vg, screen_width, screen_height, 1); // Начинаем фрейм
-        float fontSize = calc( max_width, max_height);
+        float fontSize = calc( max_width, max_height, label );
         nvgFontSize(vg, fontSize);
          nvgFontFace(vg, fontName); // Используем загруженный шрифт
 
@@ -122,7 +115,7 @@ public class TextRenderer {
         float textHeight = bounds[3] - bounds[1]; // Высота текста
 
 
-        nvgText(vg, this.x-textWidth/2, this.y+textHeight/3, label);
+        nvgText(vg, x-textWidth/2, y+textHeight/3, label);
     
         nvgEndFrame(vg);
     }
