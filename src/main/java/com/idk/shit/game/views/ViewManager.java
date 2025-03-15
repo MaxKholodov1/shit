@@ -4,12 +4,15 @@ import com.idk.shit.game.state.State;
 import com.idk.shit.game.state.ValueObjects.ApplicationState;
 import com.idk.shit.game.state.ValueObjects.Implementations.GameOver;
 import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Play;
-
+import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Levels.Level1;
+import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Levels.Level2;
 import com.idk.shit.game.state.ValueObjects.Implementations.Menu;
 import com.idk.shit.game.views.view.ApplicationView;
 import com.idk.shit.game.views.view.Implementations.GameOverView;
 import com.idk.shit.game.views.view.Implementations.MenuView;
-import com.idk.shit.game.views.view.Implementations.PlayingView;
+import com.idk.shit.game.views.view.Implementations.PlaysView.PlayingView;
+import com.idk.shit.game.views.view.Implementations.PlaysView.LevelsView.*;
+
 import com.idk.shit.utils.InputManager;
 
 public class ViewManager {
@@ -64,7 +67,16 @@ public class ViewManager {
             currentView = new GameOverView(currentState,window, inputManager );
         }
         if (state instanceof Play && !(currentView instanceof PlayingView)){
-            currentView = new PlayingView(currentState ,window, inputManager );
+            if (state instanceof Level1  && !(currentView instanceof Level1View)){
+                currentView=new Level1View(currentState ,window, inputManager );
+                // currentView = new PlayingView(currentState ,window, inputManager );
+
+            }
+            if (state instanceof Level2  && !(currentView instanceof Level2View)){
+                currentView=new Level2View(currentState ,window, inputManager );
+                // currentView = new PlayingView(currentState ,window, inputManager );
+
+            }
         }
     }
 }

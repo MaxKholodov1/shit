@@ -53,6 +53,12 @@ public class Object  {
     public void SetY(float y){
         this.y=y;
     }
+    public float height(){
+        return this.height;
+    }
+    public float speed_y(){
+        return 0f;
+    }
     public void update_object(float speed) {
         // Обновление позиции игрока на основе нажатых клавиш
         this.x+=speed;
@@ -67,11 +73,14 @@ public class Object  {
         DOWN,
         NONE
     }
-    public void collision(Player a) {
+    public String collision(Player a) {
         Direction dir = Direction.NONE;
         float dist=1f;
         float difx=(float)(-this.getSpeed_x()+a.getSpeed_x());
         float dify=(float)(a.speed_y()+a.accel_y());
+        if (this instanceof Meteor){
+            dify-=this.speed_y();
+        }
         if (this.getRight()<a.getLeft() || this.getLeft()>a.getRight() ||  this.getBottom()>a.getTop()|| this.getTop()<a.getBottom()){
             if(!(a.getBottom()>this.getTop()||a.getTop()<this.getBottom())){
                 if ((this.getRight()-a.getLeft())/difx>0f && (this.getRight()-a.getLeft())/difx<=dist){
@@ -94,12 +103,29 @@ public class Object  {
                 }
             }
         }
+        boolean x_overlap = ! (this.getRight() < a.getLeft() || a.getRight() < this.getLeft());
+        boolean y_overlap = !(this.getTop() < a.getBottom() || a.getTop() < this.getBottom());
         if (dir == Direction.UP) {
-            a.change_speed();
-            a.y=this.getTop()+a.height/2;
+        
+            return "UP";
+        }
+        if (dir == Direction.DOWN) {
+      
+            return "DOWN";
+        }
+        if (dir == Direction.LEFT) {
+        
+            return "LEFT";
+        }
+        if (dir == Direction.RIGHT) {
+   
+            return "RIGHT";
+        }
+        if (x_overlap && y_overlap){
+            return "true";
         }
         dir = Direction.NONE;
-
+        return "NONE";
     }
     
     

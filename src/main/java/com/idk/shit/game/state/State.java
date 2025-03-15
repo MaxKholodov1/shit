@@ -3,6 +3,8 @@ package com.idk.shit.game.state;
 import com.idk.shit.game.state.ValueObjects.ApplicationState;
 import com.idk.shit.game.state.ValueObjects.Implementations.Menu;
 import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Play;
+import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Levels.Level1;
+import com.idk.shit.game.state.ValueObjects.Implementations.Plays.Levels.Level2;
 import com.idk.shit.game.state.ValueObjects.Implementations.GameOver;
 
 public class State {
@@ -16,10 +18,14 @@ public class State {
         CurrentState = new Menu();
     }
 
-    public void Play() throws Exception{
+    public void Play(int i) throws Exception{
         if((CurrentState instanceof Menu) ||
         (CurrentState instanceof GameOver)){
-            CurrentState = new Play();
+            if (i==1){
+                CurrentState=new Level1();
+            }else if(i==2){
+                CurrentState=new Level2();
+            }
         }else{
             throw new Exception();
         }

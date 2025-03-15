@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 
 
-public class button {
+public class Button {
     protected float screen_height=1000;
     protected float screen_width=650;
 
@@ -25,7 +25,7 @@ public class button {
 
 
 
-    public button(float x, float y, float width, float height, String label,float[] color) {
+    public Button(float x, float y, float width, float height, String label,float[] color) {
         this.x = x;
         this.y = y;
         this.width = width;

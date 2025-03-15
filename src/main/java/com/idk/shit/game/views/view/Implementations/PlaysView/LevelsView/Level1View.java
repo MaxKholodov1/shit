@@ -1,4 +1,4 @@
-package com.idk.shit.game.views.view.Implementations;
+package com.idk.shit.game.views.view.Implementations.PlaysView.LevelsView;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -7,21 +7,23 @@ import java.util.Iterator;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_SPACE;
+
 import com.idk.shit.graphics.Texture;
 import com.idk.shit.graphics.TextureCache;
 import com.idk.shit.game.state.State;
 import com.idk.shit.game.views.view.ApplicationView;
+import com.idk.shit.game.views.view.Implementations.PlaysView.*;
 import com.idk.shit.graphics.Shader;
 
 import com.idk.shit.objects.Object;
 import com.idk.shit.objects.Player;
-import com.idk.shit.ui.button;
+import com.idk.shit.ui.Button;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
 import com.idk.shit.utils.ScoreManager;
 import com.idk.shit.utils.rand;
 
-public class PlayingView extends ApplicationView {
+public class Level1View extends ApplicationView {
     private Deque<Object> blocks = new ArrayDeque<>();
     private Deque<Object> supposed_blocks = new ArrayDeque<>();
     public float screen_height=1000;
@@ -37,7 +39,7 @@ public class PlayingView extends ApplicationView {
     private float accel_y = -0.003f;
     private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
-    private button redButton = new button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
+    private Button redButton = new Button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
     private Texture playerTexture;
     private Texture blockTexture;
 
@@ -45,7 +47,7 @@ public class PlayingView extends ApplicationView {
 
 
 
-    public PlayingView(State state, long window, InputManager inputManager) {
+    public Level1View(State state, long window, InputManager inputManager) {
         super( state, window, inputManager); // Передаем window в родительский класс
         initGame();
       
@@ -70,7 +72,7 @@ public class PlayingView extends ApplicationView {
     private void initGame() {
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
-        player = new Player(0.0f, 0.0f, 0.15f, 0.23f, 0.02f,Colours.WHITE, this.playerTexture);
+        player = new Player(0.0f, 0.0f, 0.15f, 0.23f, 0.02f,Colours.WHITE, this.playerTexture, max_speed_y, accel_y);
         block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE, this.blockTexture );
         float left =  block_width / 2 - RATIO;
         float right = - block_width / 2 + RATIO; 
@@ -140,7 +142,10 @@ public class PlayingView extends ApplicationView {
         }
 
         for (Object block : blocks) {
-            block.collision(player);
+            if ("UP"==block.collision(player)){
+                player.change_speed();
+                player.SetY(block.getTop()+player.height()/2);
+            }
         }
 
         redButton.update(this.window);

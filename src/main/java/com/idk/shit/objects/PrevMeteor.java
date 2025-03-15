@@ -1,14 +1,15 @@
 package com.idk.shit.objects;
 
 import com.idk.shit.graphics.Texture;
-public class Meteor extends Object { 
-    protected float speed_y=-0.025f;
+public class PrevMeteor extends Object { 
+    protected float speed_y=0.0f;
     protected float accel_y=0f;
     private float screen_width=650;
     private float screen_height=1000;
     private float RATIO=screen_width/screen_height;
+    private float time =0;
 
-    public Meteor(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
+    public PrevMeteor(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
         super(startX, startY, width, height, speed, colour, texture);
     }
     public boolean fall_down(){
@@ -20,9 +21,10 @@ public class Meteor extends Object {
     }
     @Override
     public void update_object(float speed) {
-        speed_y+=accel_y;
-        this.y+=speed_y;
-        this.x+=speed;
+        ++time;
+        if (time>20){
+            this.y=-2;
+        }
     }
     public float speed_y(){
         return speed_y;
@@ -33,5 +35,4 @@ public class Meteor extends Object {
     public float height(){
         return height ;
     }
-
 }

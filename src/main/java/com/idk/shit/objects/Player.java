@@ -10,14 +10,16 @@ import com.idk.shit.graphics.Texture;
 // import com.idk.shit.graphics.Shader;
 public class Player extends Object { 
     protected float speed_y=-0.0f;
-    protected float max_speed_y=0.07f;
-    protected float accel_y=-0.003f;
+    protected float max_speed_y;
+    protected float accel_y;
     private float screen_width=650;
     private float screen_height=1000;
     private float RATIO=screen_width/screen_height;
 
-    public Player(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture) {
+    public Player(float startX, float startY, float width, float height, float speed, float[] colour, Texture texture, float max_speed_y, float accel_y) {
         super(startX, startY, width, height, speed, colour, texture);
+        this.max_speed_y=max_speed_y;
+        this.accel_y=accel_y;
     }
     public boolean fall_down(){
         if(this.y<-1){
@@ -53,17 +55,4 @@ public class Player extends Object {
     public float height(){
         return height ;
     }
-    // @Override
-    // public void draw() {
-    //     glColor3f(0,0,0);
-    //     glBegin(GL_QUADS);
-
-    //     glVertex2f(x + width / 2f, y + height / 2f);
-    //     glVertex2f(x + width / 2f, y - height / 2f);
-    //     glVertex2f(x - width / 2f, y - height / 2f);
-    //     glVertex2f(x - width / 2f, y + height / 2f);
-
-    //     glEnd();
-
-    // }
 }
