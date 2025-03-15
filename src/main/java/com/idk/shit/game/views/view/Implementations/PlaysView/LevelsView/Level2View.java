@@ -13,6 +13,8 @@ import com.idk.shit.graphics.TextureCache;
 import com.idk.shit.game.state.State;
 import com.idk.shit.game.views.view.ApplicationView;
 import com.idk.shit.game.views.view.Implementations.PlaysView.*;
+import org.lwjgl.nanovg.NanoVG;
+import org.lwjgl.nanovg.NanoVGGL3;
 import com.idk.shit.objects.Meteor;
 
 import com.idk.shit.objects.Object;
@@ -44,7 +46,7 @@ public class Level2View extends ApplicationView {
     private float accel_y = -0.002f;
     private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
-    private Button redButton = new Button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
+    private Button redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg);
     private Texture playerTexture;
     private Texture blockTexture;
     private Texture meteorTexture;
@@ -53,8 +55,8 @@ public class Level2View extends ApplicationView {
 
 
 
-    public Level2View(State state, long window, InputManager inputManager) {
-        super( state, window, inputManager); // Передаем window в родительский класс
+    public Level2View(State state, long window, InputManager inputManager, long vg) {
+        super( state, window, inputManager, vg); // Передаем window в родительский класс
         initGame();
       
     }

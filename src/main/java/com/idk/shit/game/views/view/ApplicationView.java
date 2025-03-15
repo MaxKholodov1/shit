@@ -6,11 +6,12 @@ public abstract  class ApplicationView {
     protected long window;
     protected InputManager inputManager;
     protected State state;
-
-    public ApplicationView(State state, long window,InputManager inputManager){
+    protected long vg;
+    public ApplicationView(State state, long window,InputManager inputManager, long vg){
         this.state = state;
         this.window=window;
         this.inputManager=inputManager;
+        this.vg = vg;
     }
     public abstract void update() throws Exception;
     public abstract void render();

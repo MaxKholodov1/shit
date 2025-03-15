@@ -9,10 +9,10 @@ import com.idk.shit.game.state.State;
 import com.idk.shit.game.views.view.ApplicationView;
 
 public class GameOverView extends ApplicationView{
-    private Button gameButton = new Button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN);
+    private Button gameButton = new Button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.GREEN, vg);
 
-    public GameOverView(State state,long window, InputManager inputManager) {
-        super(state, window, inputManager);
+    public GameOverView(State state,long window, InputManager inputManager, long vg) {
+        super(state, window, inputManager, vg);
         initGameOver();
     }
     protected boolean spaced=false;

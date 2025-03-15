@@ -19,8 +19,8 @@ import static org.lwjgl.nanovg.NanoVG.nvgTextBounds;
 import com.idk.shit.Main;
 
 public class TextRenderer {
-    protected float screen_height=800;
-    protected float screen_width=500;
+    protected float screen_height=1000;
+    protected float screen_width=650;
     private float x;
     private float y;
     private String label;
@@ -29,10 +29,11 @@ public class TextRenderer {
     private float max_height;
     private float max_width;
     private String fontName = "roboto"; // Имя шрифта
+    float RATIO=(float)screen_width/(float)screen_height;
 
 
     public TextRenderer(float x, float y, String label,float[] color,  long vg, float max_height,float  max_width ) {
-        this.x = (x+1)/2*screen_width;
+        this.x = (x+RATIO)/(2*RATIO)*screen_width;
         this.y =(1-(y+1)/2) *screen_height;
         this.label = label;
         this.color = color;
@@ -102,7 +103,7 @@ public class TextRenderer {
         calc(this.max_width, this.max_height);
     }
 
-    public void drawText() {
+    public void drawText(float x, float y, String label,float[] color,  long vg, float max_height,float  max_width ) {
         nvgBeginFrame(vg, screen_width, screen_height, 1); // Начинаем фрейм
         float fontSize = calc( max_width, max_height);
         nvgFontSize(vg, fontSize);
@@ -121,7 +122,7 @@ public class TextRenderer {
         float textHeight = bounds[3] - bounds[1]; // Высота текста
 
 
-        nvgText(vg, this.x-textWidth/2, this.y+textHeight/2, label);
+        nvgText(vg, this.x-textWidth/2, this.y+textHeight/3, label);
     
         nvgEndFrame(vg);
     }

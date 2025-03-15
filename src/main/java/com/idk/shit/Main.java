@@ -3,6 +3,8 @@ package com.idk.shit;
 import org.lwjgl.Version;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.nanovg.NanoVG;
+import org.lwjgl.nanovg.NanoVGGL3;
 import org.lwjgl.opengl.GL;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -26,6 +28,7 @@ public class Main {
     protected float RATIO;
     protected MenuView menuView;
     protected State state;
+    protected long vg;
     Texture background, playerTexture, blockTexture;
 
     public void run() {
@@ -74,12 +77,13 @@ public class Main {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
         // shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
+        vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
         background = TextureCache.getTexture("src\\main\\resources\\textures\\image.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
         state =new State();
-        viewManager = new ViewManager(window, inputManager, state);
-        menuView =new MenuView (state, window, inputManager);
+        viewManager = new ViewManager(window, inputManager, state, vg);
+        menuView =new MenuView (state, window, inputManager, vg);
         viewManager.setState(menuView);
 
     }

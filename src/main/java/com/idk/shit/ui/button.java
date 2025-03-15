@@ -6,6 +6,9 @@ import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.glfwGetCursorPos;
 import static org.lwjgl.glfw.GLFW.glfwGetMouseButton;
 import org.lwjgl.opengl.GL11;
+
+import com.idk.shit.utils.Colours;
+
 import static org.lwjgl.opengl.GL11.glBegin;
 import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glColor3fv;
@@ -22,16 +25,18 @@ public class Button {
     private boolean isHovered = false;
     private boolean isClicked = false;
     private float[] color; 
+    private String label;
+    private long vg;
+    private float  RATIO= (float)(screen_width/screen_height);
 
-
-
-    public Button(float x, float y, float width, float height, String label,float[] color) {
+    public Button(float x, float y, float width, float height, String label,float[] color, long vg) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
-
+        this.label = label;
+        this.vg = vg;
     }
 
     public float left() {
@@ -64,6 +69,8 @@ public class Button {
             glVertex2f(x + width / 2, y + height / 2); 
             glVertex2f(x - width / 2, y + height / 2); 
         glEnd();
+        TextRenderer textRenderer = new TextRenderer(x, y, label, Colours.BROWN, vg, height, width);
+        textRenderer.drawText( );
     }
     
    
@@ -73,7 +80,7 @@ public class Button {
         double[] mouseY = new double[1];
         glfwGetCursorPos(window, mouseX, mouseY);
         
-        float normX = (float) ((mouseX[0] / screen_width) * 2 - 1);  
+        float normX = (float) ((mouseX[0] / screen_width) * 2 * RATIO - RATIO);
         float normY = (float) (1 - (mouseY[0] / screen_height) * 2);  
 
         isHovered = (normX >= x - width/2  && normX <= x + width/2&&

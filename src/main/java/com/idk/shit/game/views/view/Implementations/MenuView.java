@@ -16,12 +16,12 @@ import com.idk.shit.game.views.view.ApplicationView;
 
 
 public class MenuView extends ApplicationView {
-    private Button Buttonlevel1 = new Button(0.f, 0.5f, 1f, 0.8f, "start",Colours.RED);
-    private Button Buttonlevel2 = new Button(0.f, -0.5f, 1f, 0.8f, "start",Colours.RED);
+    private Button Buttonlevel1 = new Button(0.f, 0.5f, 1f, 0.6f, "LEVEL 1",Colours.BROWN, vg);
+    private Button Buttonlevel2 = new Button(0.f, -0.5f, 1f, 0.6f, "LEVEL 2",Colours.BROWN, vg);
     Button[] buttons = new Button[]{Buttonlevel1, Buttonlevel2};
 
-    public MenuView(State state, long window, InputManager inputManager) {
-        super(state, window, inputManager);
+    public MenuView(State state, long window, InputManager inputManager, long vg) {
+        super(state, window, inputManager, vg);
         initMenu();
     }
     private void initMenu(){

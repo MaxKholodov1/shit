@@ -39,7 +39,7 @@ public class Level1View extends ApplicationView {
     private float accel_y = -0.003f;
     private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
-    private Button redButton = new Button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN);
+    private Button redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg);
     private Texture playerTexture;
     private Texture blockTexture;
 
@@ -47,8 +47,8 @@ public class Level1View extends ApplicationView {
 
 
 
-    public Level1View(State state, long window, InputManager inputManager) {
-        super( state, window, inputManager); // Передаем window в родительский класс
+    public Level1View(State state, long window, InputManager inputManager, long vg) {
+        super( state, window, inputManager, vg); // Передаем window в родительский класс
         initGame();
       
     }
