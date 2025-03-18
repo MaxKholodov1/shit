@@ -51,13 +51,14 @@ public class Level2View extends ApplicationView {
     private Texture blockTexture;
     private Texture meteorTexture;
     private Texture prevmeteorTexture;
-
-
+    private Texture background;
 
 
     public Level2View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
         super( state, window, inputManager, vg, textRenderer); // Передаем window в родительский класс
         redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg, textRenderer);
+        background = TextureCache.getTexture("src\\main\\resources\\textures\\image.png");
+
         initGame();
       
     }
@@ -209,6 +210,8 @@ public class Level2View extends ApplicationView {
     }
     @Override
     public void render() {
+        background.draw(0f, 0f, 2*RATIO, 2);
+
         for (Object block : blocks) {
             block.draw();
         }

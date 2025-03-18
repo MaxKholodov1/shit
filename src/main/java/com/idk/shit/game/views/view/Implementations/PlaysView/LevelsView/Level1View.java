@@ -28,8 +28,8 @@ public class Level1View extends ApplicationView {
     public float screen_height=1000;
     public float screen_width=650;
     public float RATIO = (float)screen_width/(float)screen_height;
-    private float block_height = 0.045f;
-    private float block_width = 0.25f;
+    private float block_height = 0.06f;
+    private float block_width = 0.29f;
     private Player player;
     private Object block;
  
@@ -41,6 +41,7 @@ public class Level1View extends ApplicationView {
     private Button redButton;
     private Texture playerTexture;
     private Texture blockTexture;
+    private Texture background;
 
     // protected Shader shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
 
@@ -49,6 +50,7 @@ public class Level1View extends ApplicationView {
     public Level1View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
         super( state, window, inputManager, vg, textRenderer); // Передаем window в родительский класс
         redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg, textRenderer);
+        background = TextureCache.getTexture("src\\main\\resources\\textures\\night-star-sky-night-sky-preview.jpg");
         initGame();
       
     }
@@ -71,7 +73,7 @@ public class Level1View extends ApplicationView {
 
     private void initGame() {
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
-        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
+        blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\cloud.png");
         player = new Player(0.0f, 0.0f, 0.15f, 0.23f, 0.02f,Colours.WHITE, this.playerTexture, max_speed_y, accel_y);
         block = new Object(0.0f, -0.5f, block_width, block_height, 0.0f, Colours.PURPLE, this.blockTexture );
         float left =  block_width / 2 - RATIO;
@@ -159,6 +161,7 @@ public class Level1View extends ApplicationView {
     }
     @Override
     public void render() {
+        background.draw(0f, 0f, 2*RATIO, 2);
         for (Object block : blocks) {
             block.draw();
         }

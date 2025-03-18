@@ -81,7 +81,6 @@ public class Main {
         // shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
         vg = NanoVGGL3.nvgCreate(NanoVG.NVG_ALIGN_BASELINE);
         textRenderer = new TextRenderer(vg);
-        background = TextureCache.getTexture("src\\main\\resources\\textures\\image.png");
         playerTexture = TextureCache.getTexture("src\\main\\resources\\textures\\pngegg.png");
         blockTexture = TextureCache.getTexture("src\\main\\resources\\textures\\трава.png");
         state =new State();
@@ -103,7 +102,6 @@ public class Main {
         while (!glfwWindowShouldClose(window)) {
             // Очищаем буфер цвета и глубины
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            background.draw(0f, 0f, 2*RATIO, 2);
             // Обновляем и рендерим игру
             viewManager.update();
             viewManager.render();
