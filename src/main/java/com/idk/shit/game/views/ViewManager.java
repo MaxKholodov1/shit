@@ -15,6 +15,7 @@ import com.idk.shit.game.views.view.Implementations.PlaysView.LevelsView.*;
 import com.idk.shit.ui.TextRenderer;
 
 import com.idk.shit.utils.InputManager;
+import com.idk.shit.utils.ScoreManager;
 
 public class ViewManager {
     public State currentState;
@@ -23,12 +24,14 @@ public class ViewManager {
     public InputManager inputManager;
     public long vg;
     public TextRenderer textRenderer;
-    public ViewManager(long window, InputManager inputManager, State currentState, long vg,TextRenderer textRenderer ){
+    public ScoreManager scoreManager;
+    public ViewManager(long window, InputManager inputManager, State currentState, long vg,TextRenderer textRenderer, ScoreManager scoreManager ){
         this.window=window;
         this.inputManager=inputManager;
         this.currentState=currentState;
         this.vg = vg;
         this.textRenderer = textRenderer;
+        this.scoreManager=scoreManager;
     }
     public void setState(ApplicationView newView){
         if(currentView!=null){
@@ -65,22 +68,23 @@ public class ViewManager {
     private void UpdateViewByState(){
         ApplicationState state = currentState.GetApplicationState();
         if(state instanceof Menu && !(currentView instanceof MenuView)){
-            currentView = new MenuView(currentState, window, inputManager, vg, textRenderer );
+            currentView = new MenuView(currentState, window, inputManager, vg, textRenderer, scoreManager );
         }
 
         if(state instanceof GameOver && !(currentView instanceof GameOverView)){
-            currentView = new GameOverView(currentState,window, inputManager, vg, textRenderer );
+            int score = currentView.GetScore();
+            int level = currentView.GetLevel();
+            currentView = new GameOverView(currentState,window, inputManager, vg, textRenderer, scoreManager,score, level);
         }
         if (state instanceof Play && !(currentView instanceof PlayingView)){
             if (state instanceof Level1  && !(currentView instanceof Level1View)){
-                currentView=new Level1View(currentState ,window, inputManager, vg, textRenderer );
+                currentView=new Level1View(currentState ,window, inputManager, vg, textRenderer, scoreManager );
                 // currentView = new PlayingView(currentState ,window, inputManager );
 
             }
             if (state instanceof Level2  && !(currentView instanceof Level2View)){
-                currentView=new Level2View(currentState ,window, inputManager, vg, textRenderer );
+                currentView=new Level2View(currentState ,window, inputManager, vg, textRenderer, scoreManager );
                 // currentView = new PlayingView(currentState ,window, inputManager );
-
             }
         }
     }

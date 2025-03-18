@@ -73,7 +73,7 @@ public class Button {
             glVertex2f(x - width / 2, y + height / 2); 
         glEnd();
         
-        textRenderer.drawText(this.x, this.y, label, color, vg, this.height, this.width );
+        textRenderer.drawText(this.x, this.y, label, Colours.BLACK, vg, this.height, this.width );
     }
     
    

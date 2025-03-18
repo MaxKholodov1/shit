@@ -23,6 +23,7 @@ import com.idk.shit.ui.Button;
 import com.idk.shit.ui.TextRenderer;
 import com.idk.shit.utils.Colours;
 import com.idk.shit.utils.InputManager;
+import com.idk.shit.utils.ScoreManager;
 import com.idk.shit.utils.rand;
 
 public class Level2View extends ApplicationView {
@@ -54,8 +55,8 @@ public class Level2View extends ApplicationView {
     private Texture background;
 
 
-    public Level2View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
-        super( state, window, inputManager, vg, textRenderer); // Передаем window в родительский класс
+    public Level2View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer, ScoreManager scoreManager) {
+        super( state, window, inputManager, vg, textRenderer, scoreManager); // Передаем window в родительский класс
         redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg, textRenderer);
         background = TextureCache.getTexture("src\\main\\resources\\textures\\image.png");
 
@@ -225,6 +226,9 @@ public class Level2View extends ApplicationView {
         for (PrevMeteor prevmeteor : prevmeteors) {
             prevmeteor.draw();
         }
+        String scoreString = String.valueOf(score);
+        textRenderer.drawText(RATIO-0.1f, 0.9f, scoreString, Colours.WHITE, vg, 0.5f, 0.5f);
+    
     }
     @Override
     public void cleanup() {
@@ -232,5 +236,13 @@ public class Level2View extends ApplicationView {
         supposed_blocks.clear();
         player = null;
         block = null;
-    }   
+    } 
+    @Override 
+    public int GetLevel(){
+        return 2;
+    }
+    @Override  
+    public int GetScore(){
+        return score;
+    }  
 }

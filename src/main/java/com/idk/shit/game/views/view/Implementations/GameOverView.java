@@ -8,18 +8,22 @@ import com.idk.shit.utils.InputManager;
 import com.idk.shit.game.state.State;
 import com.idk.shit.game.views.view.ApplicationView;
 import com.idk.shit.ui.TextRenderer;
+import com.idk.shit.utils.ScoreManager;
 
 public class GameOverView extends ApplicationView{
     private Button gameButton;
-
-    public GameOverView(State state,long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
-        super(state, window, inputManager, vg, textRenderer);
+    protected int score;
+    protected int level;
+    public GameOverView(State state,long window, InputManager inputManager, long vg, TextRenderer textRenderer, ScoreManager scoreManager, int score, int level) {
+        super(state, window, inputManager, vg, textRenderer, scoreManager);
+        this.score = score;
+        this.level=level;
         gameButton = new Button(0.f, 0.f, 1f, 0.5f, "TRY AGAIN!", Colours.BROWN, vg, textRenderer);
         initGameOver();
     }
-    protected boolean spaced=false;
     private void initGameOver(){
-
+        scoreManager.updateScore(level, score); // Обновит рекорд для уровня 1, если 600 больше текущего
+        System.out.println(scoreManager.getHighScore(level));
     }
     @Override
     public void  update() throws Exception{
@@ -32,5 +36,8 @@ public class GameOverView extends ApplicationView{
     @Override
     public void render(){
         gameButton.draw();
+        String scoreString = String.valueOf(score);
+        textRenderer.drawText(0f, 0.9f, "your score:", Colours.BLACK, vg, 0.5f, 0.5f);
+        textRenderer.drawText(-0.005f, 0.8f, scoreString, Colours.BLACK, vg, 0.4f, 0.4f);
     }
 }

@@ -47,8 +47,8 @@ public class PlayingView extends ApplicationView {
 
 
 
-    public PlayingView(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
-        super( state, window, inputManager, vg, textRenderer); // Передаем window в родительский класс
+    public PlayingView(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer, ScoreManager scoreManager) {
+        super( state, window, inputManager, vg, textRenderer, scoreManager); // Передаем window в родительский класс
         redButton = new Button(-0.7f, 0.95f, 0.6f, 0.1f, "menu", Colours.GREEN, vg, textRenderer);
         initGame();
       

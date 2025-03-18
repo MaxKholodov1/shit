@@ -32,23 +32,25 @@ public class Level1View extends ApplicationView {
     private float block_width = 0.29f;
     private Player player;
     private Object block;
- 
+
+
+    private int score = 0;
     private float speed_player_x = 0.03f;
     private float max_speed_y = 0.07f;
     private float accel_y = -0.003f;
-    private int score = 0;
     private float max_height = -max_speed_y * max_speed_y / (2 * accel_y) - max_speed_y;
     private Button redButton;
     private Texture playerTexture;
     private Texture blockTexture;
     private Texture background;
+    
 
     // protected Shader shader = new Shader("vertex_shader.glsl", "fragment_shader.glsl");
 
 
 
-    public Level1View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer) {
-        super( state, window, inputManager, vg, textRenderer); // Передаем window в родительский класс
+    public Level1View(State state, long window, InputManager inputManager, long vg, TextRenderer textRenderer, ScoreManager scoreManager) {
+        super( state, window, inputManager, vg, textRenderer, scoreManager); // Передаем window в родительский класс
         redButton = new Button(-0.45f, 0.9f, 0.4f, 0.1f, "menu", Colours.GREEN, vg, textRenderer);
         background = TextureCache.getTexture("src\\main\\resources\\textures\\night-star-sky-night-sky-preview.jpg");
         initGame();
@@ -96,6 +98,16 @@ public class Level1View extends ApplicationView {
             state.GameOver();
             return;
         }
+
+        redButton.update(this.window);
+        if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
+            state.Menu();
+            cleanup();
+            inputManager.cleanup();
+            return;
+            
+        }
+
         if (inputManager.isKeyPressed(GLFW_KEY_LEFT) && !inputManager.isKeyPressed(GLFW_KEY_RIGHT) ) {
             player.update_object(-speed_player_x);
         } else if (inputManager.isKeyPressed(GLFW_KEY_RIGHT) && !inputManager.isKeyPressed(GLFW_KEY_LEFT)) {
@@ -149,15 +161,6 @@ public class Level1View extends ApplicationView {
                 player.SetY(block.getTop()+player.height()/2);
             }
         }
-
-        redButton.update(this.window);
-        if (redButton.isClicked()||inputManager.isKeyPressed(GLFW_KEY_SPACE)) {
-            state.Menu();
-            cleanup();
-            inputManager.cleanup();
-            return;
-            
-        }
     }
     @Override
     public void render() {
@@ -167,6 +170,8 @@ public class Level1View extends ApplicationView {
         }
         redButton.draw();
         player.draw();
+        String scoreString = String.valueOf(score);
+        textRenderer.drawText(RATIO-0.1f, 0.9f, scoreString, Colours.WHITE, vg, 0.5f, 0.5f);
     }
     @Override
     public void cleanup() {
@@ -174,6 +179,13 @@ public class Level1View extends ApplicationView {
         supposed_blocks.clear();
         player = null;
         block = null;
-        // redButton = null;
-    }   
+    } 
+    @Override  
+    public int GetLevel(){
+        return 1;
+    }
+    @Override  
+    public int GetScore(){
+        return score;
+    }
 }

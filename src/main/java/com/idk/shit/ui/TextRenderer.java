@@ -103,10 +103,10 @@ public class TextRenderer {
          nvgFontFace(vg, fontName); // Используем загруженный шрифт
 
         NVGColor color1 = NVGColor.create();
-        color1.r(0.0f);  // Красный
-        color1.g(0.0f);  // Зеленый
-        color1.b(0.0f);  // Синий
-        color1.a(1.0f);  // Альфа (непрозрачность)
+        color1.r(color[0]);  // Красный
+        color1.g(color[1]);  // Зеленый
+        color1.b(color[2]);  // Синий
+        color1.a(color.length > 3 ? color[3] : 1.0f);// прозрачность
         nvgFillColor(vg, color1);
 
         float[] bounds = new float[4];
